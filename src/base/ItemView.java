@@ -3,11 +3,7 @@ package base;
 import edu.utep.cs.cs3331.pw.ConsoleUi;
 import edu.utep.cs.cs3331.pw.Item;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -71,7 +67,7 @@ public class ItemView extends JPanel {
         y += 20;
         g.drawString("Hi, I am your item!", x, y);
         y += 20;
-        g.drawString("Name: " + Main.item.getItemName(), x, y);
+        g.drawString("Name: \t", x, 70);
         y += 20;
         g.drawString("URL: " + Main.item.getURL(), x, y);
         y += 20;
@@ -80,6 +76,10 @@ public class ItemView extends JPanel {
         g.drawString("Change: " + Main.item.getItemChange(), x, y);
         y += 20;
         g.drawString("Added: " + Main.item.getItemDate(), x, y);
+        Font font = new Font("Arial", Font.BOLD, 13);
+        g.setFont(font);
+        String name = Main.item.getItemName();
+        g.drawString(name, x + 40, 70);
     }
     
     /** Return true if the given screen coordinate is inside the viewPage icon. */

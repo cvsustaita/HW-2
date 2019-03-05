@@ -64,7 +64,7 @@ public class Main extends JFrame {
             e.printStackTrace();
         }
 
-    	showMessage("Ref");
+    	showMessage("Refresh clicked!");
     }
     
     /** Callback to be invoked when the view-page icon is clicked.
