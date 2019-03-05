@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.io.*;
 import java.net.URI;
 
-import javax.sound.sampled.*;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -62,7 +61,6 @@ public class Main extends JFrame {
     	//--
 
         item.setItemPrice(item.getRandomPrice());
-        item.setItemChange(item.change());
         super.repaint();
     	showMessage("Updated item price: "+item.getItemPrice());
 
