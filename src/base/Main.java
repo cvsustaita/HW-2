@@ -55,14 +55,7 @@ public class Main extends JFrame {
     	//--
     	//-- WRITE YOUR CODE HERE!
     	//--
-        System.out.println("Web page displaying in your browser");
-        try {
-            Desktop desktop = Desktop.getDesktop();
-            desktop.browse(new URI(item.getURL()));
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
     	showMessage("Ref");
     }
@@ -71,12 +64,18 @@ public class Main extends JFrame {
      * Launch a (default) web browser by supplying the URL of
      * the item. */
     private void viewPageClicked() {
-
-
     	//--
     	//-- WRITE YOUR CODE HERE!
     	//--
 
+        System.out.println("Web page displaying in your browser");
+        try {
+            Desktop desktop = Desktop.getDesktop();
+            desktop.browse(new URI(item.getURL()));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     	showMessage("View clicked!");
     }
         

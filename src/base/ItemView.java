@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 /** A special panel to display the detail of an item. */
 
 @SuppressWarnings("serial")
-public class ItemView extends JPanel implements Main.RefreshClicked {
+public class ItemView extends JPanel{
 
     Graphics graphics;
 
@@ -102,14 +102,5 @@ public class ItemView extends JPanel implements Main.RefreshClicked {
             e.printStackTrace();
         }
         return null;
-    }
-
-    public void update(Graphics graphics){
-        paintComponent(graphics);
-    }
-
-    @Override
-    public void refreshClicked() {
-        update(graphics);
     }
 }
