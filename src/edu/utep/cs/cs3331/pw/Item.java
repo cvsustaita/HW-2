@@ -12,6 +12,7 @@ public class Item {
     private double itemChange = change();
     private String itemDate;
 
+    
     public Item(String itemName, String URL, double maxPrice, double minPrice, double itemPrice, double itemChange, String itemDate) {
         this.itemName = itemName;
         this.URL = URL;
