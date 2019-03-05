@@ -10,7 +10,17 @@ public class Item {
     private double minPrice = 61.67;
     private double itemPrice = getRandomPrice();
     private double itemChange = change();
-    private String itemDate = "08/25/2018";
+    private String itemDate;
+
+    public Item(String itemName, String URL, double maxPrice, double minPrice, double itemPrice, double itemChange, String itemDate) {
+        this.itemName = itemName;
+        this.URL = URL;
+        this.maxPrice = maxPrice;
+        this.minPrice = minPrice;
+        this.itemPrice = itemPrice;
+        this.itemChange = itemChange;
+        this.itemDate = itemDate;
+    }
 
     public String getItemName() {
         return itemName;
