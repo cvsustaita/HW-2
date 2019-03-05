@@ -1,4 +1,6 @@
 package edu.utep.cs.cs3331.pw;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Item {
@@ -31,6 +33,10 @@ public class Item {
     }
 
     public String getItemDate() {
+        DateFormat dateFormat = new SimpleDateFormat("mm/dd/yyy");
+        Date date = new Date();
+        String currentDate = dateFormat.format(date);
+        itemDate = currentDate;
         return itemDate;
     }
 
