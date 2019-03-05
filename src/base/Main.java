@@ -1,11 +1,9 @@
 package base;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
+import edu.utep.cs.cs3331.pw.Item;
+import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.net.URI;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -21,6 +19,7 @@ import javax.swing.SwingUtilities;
 */
 @SuppressWarnings("serial")
 public class Main extends JFrame {
+    private Item item = new Item();
 
     /** Default dimension of the dialog. */
     private final static Dimension DEFAULT_SIZE = new Dimension(400, 300);
@@ -56,16 +55,28 @@ public class Main extends JFrame {
     	//--
     	//-- WRITE YOUR CODE HERE!
     	//--
+        System.out.println("Web page displaying in your browser");
+        try {
+            Desktop desktop = Desktop.getDesktop();
+            desktop.browse(new URI(item.getURL()));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     	showMessage("Refresh clicked!");
     }
     
     /** Callback to be invoked when the view-page icon is clicked.
      * Launch a (default) web browser by supplying the URL of
      * the item. */
-    private void viewPageClicked() {    	
+    private void viewPageClicked() {
+
+
     	//--
     	//-- WRITE YOUR CODE HERE!
     	//--
+
     	showMessage("View clicked!");
     }
         
@@ -115,5 +126,4 @@ public class Main extends JFrame {
     public static void main(String[] args) {
         new Main();
     }
-
 }
