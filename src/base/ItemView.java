@@ -1,5 +1,8 @@
 package base;
 
+import edu.utep.cs.cs3331.pw.ConsoleUi;
+import edu.utep.cs.cs3331.pw.Item;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -19,7 +22,8 @@ import javax.swing.JPanel;
 public class ItemView extends JPanel {
 
 
-    
+    private Item item = new Item();
+    private ConsoleUi ui = new ConsoleUi(item);
 	/** Interface to notify a click on the view page icon. */
 	public interface ClickListener {
 		
@@ -61,10 +65,19 @@ public class ItemView extends JPanel {
         //-- WRITE YOUR CODE HERE!
         //--
         int x = 20, y = 30;
-        // g.drawImage(getImage("view.png"), x, y)
         g.drawString("[View]", x, y);
         y += 20;
         g.drawString("Hi, I am your item!", x, y);
+        y += 20;
+        g.drawString("Name: " + item.getItemName(), x, y);
+        y += 20;
+        g.drawString("URL: " + item.getURL(), x, y);
+        y += 20;
+        g.drawString("Price: " + item.getItemPrice(), x, y);
+        y += 20;
+        g.drawString("Change: " + item.getItemChange(), x, y);
+        y += 20;
+        g.drawString("Added: " + item.getItemDate(), x, y);
     }
     
     /** Return true if the given screen coordinate is inside the viewPage icon. */
