@@ -17,6 +17,8 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class ItemView extends JPanel {
+
+
     
 	/** Interface to notify a click on the view page icon. */
 	public interface ClickListener {
