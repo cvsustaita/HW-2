@@ -70,19 +70,21 @@ public class ItemView extends JPanel{
         y += 20;
         g.drawString("Hi, I am your item!", x, y);
         y += 20;
-        g.drawString("Name: \t", x, 70);
+        g.drawString("Name: ", x, 70);
         y += 20;
         g.drawString("URL: " + Main.item.getURL(), x, y);
         y += 20;
-        g.drawString("Price: " + Main.item.getItemPrice(), x, y);
+        g.drawString("Price: ", x, y);
         y += 20;
         g.drawString("Change: " + Main.item.getItemChange(), x, y);
         y += 20;
         g.drawString("Added: " + Main.item.getItemDate(), x, y);
         Font font = new Font("Arial", Font.BOLD, 13);
         g.setFont(font);
-        String name = Main.item.getItemName();
-        g.drawString(name, x + 40, 70);
+        g.drawString(Main.item.getItemName(), x + 40, 70);
+        g.setColor(Color.BLUE);
+        String price = Double.toString(Main.item.getItemPrice());
+        g.drawString(price, x + 40, 110);
     }
     
     /** Return true if the given screen coordinate is inside the viewPage icon. */
