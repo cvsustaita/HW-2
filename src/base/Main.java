@@ -1,10 +1,15 @@
 package base;
 
 import edu.utep.cs.cs3331.pw.Item;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.*;
 import java.net.URI;
 
+import javax.sound.sampled.*;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -59,6 +64,18 @@ public class Main extends JFrame {
         item.setItemPrice(item.getRandomPrice());
         super.repaint();
     	showMessage("Updated item price: "+item.getItemPrice());
+
+    	try {
+            InputStream is = new FileInputStream(new File("/Users/erikmacik/IdeaProjects/HW-2/src/base/cuckoo.au"));
+            try {
+                AudioStream as = new AudioStream(is);
+                AudioPlayer.player.start(as);
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+        } catch (FileNotFoundException e) {
+    	    e.printStackTrace();
+        }
     }
     
     /** Callback to be invoked when the view-page icon is clicked.
