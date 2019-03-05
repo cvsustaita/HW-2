@@ -57,6 +57,7 @@ public class Main extends JFrame {
     	//--
 
         item.setItemPrice(item.getRandomPrice());
+        super.repaint();
     	showMessage("Updated item price: "+item.getItemPrice());
     }
     
