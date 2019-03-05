@@ -56,8 +56,8 @@ public class Main extends JFrame {
     	//-- WRITE YOUR CODE HERE!
     	//--
 
-
-    	showMessage("Ref");
+        item.setItemPrice(item.getRandomPrice());
+    	showMessage("Updated item price: "+item.getItemPrice());
     }
     
     /** Callback to be invoked when the view-page icon is clicked.
