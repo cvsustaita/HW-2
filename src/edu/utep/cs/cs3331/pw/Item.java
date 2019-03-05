@@ -1,5 +1,6 @@
 package edu.utep.cs.cs3331.pw;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -82,12 +83,21 @@ public class Item {
 
     public double getRandomPrice(){
         Random ran = new Random();
-        return ran.doubles(minPrice, (maxPrice + 1)).findFirst().getAsDouble();
+        double randomPrice = ran.doubles(minPrice, (maxPrice + 1)).findFirst().getAsDouble();;
+
+        DecimalFormat df = new DecimalFormat("#.00");
+        String priceFormated = df.format(randomPrice);
+        randomPrice = Double.parseDouble(priceFormated);
+
+        return randomPrice;
     }
 
     public double change(){
         double increase = maxPrice - itemPrice;
         increase = (increase / maxPrice) * 100;
+        DecimalFormat df = new DecimalFormat("#.00");
+        String priceFormated = df.format(increase);
+        increase = Double.parseDouble(priceFormated);
         return increase;
     }
 }
