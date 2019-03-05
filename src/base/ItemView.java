@@ -19,7 +19,9 @@ import javax.swing.JPanel;
 /** A special panel to display the detail of an item. */
 
 @SuppressWarnings("serial")
-public class ItemView extends JPanel {
+public class ItemView extends JPanel implements Main.RefreshClicked {
+
+    Graphics graphics;
 
 //    Item item = new Item("LED Monitor", "https://www.bestbuy.com/site/samsung-ue590-series-28-led-4k-uhd-monitor-black/5484022.p?skuId=5484022",
 //            369.99, 61.67, item.getRandomPrice(), item.change());
@@ -60,7 +62,8 @@ public class ItemView extends JPanel {
     /** Overridden here to display the details of the item. */
     @Override
 	public void paintComponent(Graphics g) {
-        super.paintComponent(g); 
+        super.paintComponent(g);
+        graphics = g;
         //Dimension dim = getSize();
         
         //--
@@ -89,7 +92,7 @@ public class ItemView extends JPanel {
     	//--
     	return new Rectangle(20, 20, 30, 20).contains(x,  y);
     }
-        
+
     /** Return the image stored in the given file. */
     public Image getImage(String file) {
         try {
@@ -99,5 +102,14 @@ public class ItemView extends JPanel {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void update(Graphics graphics){
+        paintComponent(graphics);
+    }
+
+    @Override
+    public void refreshClicked() {
+        update(graphics);
     }
 }

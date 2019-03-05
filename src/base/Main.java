@@ -1,5 +1,6 @@
 package base;
 
+import com.oracle.deploy.update.UpdateCheckListener;
 import edu.utep.cs.cs3331.pw.Item;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -18,7 +19,7 @@ import javax.swing.SwingUtilities;
 * @author Yoonsik Cheon
 */
 @SuppressWarnings("serial")
-public class Main extends JFrame {
+public class Main extends JFrame{
     static Item item = new Item();
 
     /** Default dimension of the dialog. */
@@ -47,6 +48,12 @@ public class Main extends JFrame {
         //setResizable(false);
         showMessage("Welcome!");
     }
+
+    public interface RefreshClicked{
+        void refreshClicked();
+    }
+
+    private RefreshClicked refreshClicked;
   
     /** Callback to be invoked when the refresh button is clicked. 
      * Find the current price of the watched item and display it 
@@ -55,16 +62,17 @@ public class Main extends JFrame {
     	//--
     	//-- WRITE YOUR CODE HERE!
     	//--
-        System.out.println("Web page displaying in your browser");
-        try {
-            Desktop desktop = Desktop.getDesktop();
-            desktop.browse(new URI(item.getURL()));
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    	showMessage("Ref");
+//        System.out.println("Web page displaying in your browser");
+//        try {
+//            Desktop desktop = Desktop.getDesktop();
+//            desktop.browse(new URI(item.getURL()));
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+        item.setItemPrice(item.getRandomPrice());
+    	showMessage("Updated item price: $"+item.getItemPrice());
+    	refreshClicked.refreshClicked();
     }
     
     /** Callback to be invoked when the view-page icon is clicked.
@@ -77,6 +85,14 @@ public class Main extends JFrame {
     	//-- WRITE YOUR CODE HERE!
     	//--
 
+        System.out.println("Web page displaying in your browser");
+        try {
+            Desktop desktop = Desktop.getDesktop();
+            desktop.browse(new URI(item.getURL()));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     	showMessage("View clicked!");
     }
         
