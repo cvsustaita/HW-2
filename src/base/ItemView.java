@@ -21,9 +21,11 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class ItemView extends JPanel {
 
+//    Item item = new Item("LED Monitor", "https://www.bestbuy.com/site/samsung-ue590-series-28-led-4k-uhd-monitor-black/5484022.p?skuId=5484022",
+//            369.99, 61.67, item.getRandomPrice(), item.change());
 
-    private Item item = new Item();
-    private ConsoleUi ui = new ConsoleUi(item);
+    //private ConsoleUi ui = new ConsoleUi(item);
+
 	/** Interface to notify a click on the view page icon. */
 	public interface ClickListener {
 		
@@ -39,7 +41,7 @@ public class ItemView extends JPanel {
     
     /** Create a new instance. */
     public ItemView() {
-    	setPreferredSize(new Dimension(100, 160));
+        setPreferredSize(new Dimension(100, 160));
         setBackground(Color.WHITE);
         addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
@@ -69,15 +71,15 @@ public class ItemView extends JPanel {
         y += 20;
         g.drawString("Hi, I am your item!", x, y);
         y += 20;
-        g.drawString("Name: " + item.getItemName(), x, y);
+        g.drawString("Name: " + Main.item.getItemName(), x, y);
         y += 20;
-        g.drawString("URL: " + item.getURL(), x, y);
+        g.drawString("URL: " + Main.item.getURL(), x, y);
         y += 20;
-        g.drawString("Price: " + item.getItemPrice(), x, y);
+        g.drawString("Price: " + Main.item.getItemPrice(), x, y);
         y += 20;
-        g.drawString("Change: " + item.getItemChange(), x, y);
+        g.drawString("Change: " + Main.item.getItemChange(), x, y);
         y += 20;
-        g.drawString("Added: " + item.getItemDate(), x, y);
+        g.drawString("Added: " + Main.item.getItemDate(), x, y);
     }
     
     /** Return true if the given screen coordinate is inside the viewPage icon. */

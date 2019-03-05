@@ -19,7 +19,7 @@ import javax.swing.SwingUtilities;
 */
 @SuppressWarnings("serial")
 public class Main extends JFrame {
-    private Item item = new Item();
+    static Item item = new Item();
 
     /** Default dimension of the dialog. */
     private final static Dimension DEFAULT_SIZE = new Dimension(400, 300);
@@ -64,7 +64,7 @@ public class Main extends JFrame {
             e.printStackTrace();
         }
 
-    	showMessage("Refresh clicked!");
+    	showMessage("Ref");
     }
     
     /** Callback to be invoked when the view-page icon is clicked.
@@ -97,6 +97,14 @@ public class Main extends JFrame {
         add(board, BorderLayout.CENTER);
         msgBar.setBorder(BorderFactory.createEmptyBorder(10,16,10,0));
         add(msgBar, BorderLayout.SOUTH);
+
+        item.setItemName("LED Monitor");
+        item.setURL("https://www.bestbuy.com/site/samsung-ue590-series-28-led-4k-uhd-monitor-black/5484022.p?skuId=5484022");
+        item.setMaxPrice(369.99);
+        item.setMinPrice(61.67);
+        item.setItemPrice(item.getRandomPrice());
+        item.setItemChange(item.change());
+        item.setItemDate(item.getItemDate());
     }
       
     /** Create a control panel consisting of a refresh button. */
