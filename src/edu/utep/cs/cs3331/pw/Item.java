@@ -83,8 +83,7 @@ public class Item {
 
     public double getRandomPrice(){
         Random ran = new Random();
-        double randomPrice = ran.doubles(minPrice, (maxPrice + 1)).findFirst().getAsDouble();;
-
+        double randomPrice = ran.doubles(minPrice, (maxPrice + 1)).findFirst().getAsDouble();
         DecimalFormat df = new DecimalFormat("#.00");
         String priceFormated = df.format(randomPrice);
         randomPrice = Double.parseDouble(priceFormated);

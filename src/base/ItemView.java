@@ -60,11 +60,6 @@ public class ItemView extends JPanel{
 	public void paintComponent(Graphics g) {
         super.paintComponent(g);
         graphics = g;
-        //Dimension dim = getSize();
-        
-        //--
-        //-- WRITE YOUR CODE HERE!
-        //--
         int x = 20, y = 30;
         g.drawString("[View]", x, y);
         y += 20;
@@ -74,9 +69,9 @@ public class ItemView extends JPanel{
         y += 20;
         g.drawString("URL: " + Main.item.getURL(), x, y);
         y += 20;
-        g.drawString("Price: ", x, y);
+        g.drawString("Price: $", x, y);
         y += 20;
-        g.drawString("Change: " + Main.item.getItemChange(), x, y);
+        g.drawString("Change: %" + Main.item.getItemChange(), x, y);
         y += 20;
         g.drawString("Added: " + Main.item.getItemDate(), x, y);
         Font font = new Font("Arial", Font.BOLD, 13);
