@@ -1,8 +1,12 @@
 package base;
 
 import edu.utep.cs.cs3331.pw.Item;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.*;
 import java.net.URI;
 
 import javax.swing.BorderFactory;
@@ -56,6 +60,17 @@ public class Main extends JFrame {
     	//-- WRITE YOUR CODE HERE!
     	//--
 
+        try {
+            InputStream is = new FileInputStream(new File("/Users/erikmacik/IdeaProjects/HW-2/src/base/cuckoo.au"));
+            try {
+                AudioStream as = new AudioStream(is);
+                AudioPlayer.player.start(as);
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         item.setItemPrice(item.getRandomPrice());
         item.setItemChange(item.change());
         super.repaint();

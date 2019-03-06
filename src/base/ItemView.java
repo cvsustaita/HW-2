@@ -6,10 +6,8 @@ import edu.utep.cs.cs3331.pw.Item;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.Buffer;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
