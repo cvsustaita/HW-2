@@ -2,19 +2,18 @@ package base;
 
 import edu.utep.cs.cs3331.pw.Item;
 import edu.utep.cs.cs3331.pw.PriceFinder;
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
+
+import java.applet.Applet;
+import java.applet.AudioClip;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.*;
+import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URL;
 import java.text.DecimalFormat;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
+import javax.sound.sampled.*;
 
 /**
 * A dialog for tracking the price of an item.
@@ -72,22 +71,36 @@ public class Main extends JFrame {
         percentIncrease = Double.parseDouble(priceFormated);
         item.setItemChange(percentIncrease);
 
-        if (item.getItemChange() < 0) playSound();
+        if (item.getItemChange() < 0)
+            playSound();
 
         super.repaint();
     	showMessage("Updated item price: "+item.getItemPrice());
     }
 
     private void playSound(){
-        try {
-            InputStream is = new FileInputStream(new File("/Users/erikmacik/IdeaProjects/HW-2/src/base/chaching.au"));
-            try {
-                AudioStream as = new AudioStream(is);
-                AudioPlayer.player.start(as);
-            } catch (IOException e){
-                e.printStackTrace();
-            }
-        } catch (FileNotFoundException e) {
+        //getResource();
+        //InputStream is = //new FileInputStream(Main.class.getResource);
+//        InputStream is = Main.class.getResourceAsStream("chaching.au");
+//        try {
+//            AudioStream as = new AudioStream(is);
+//            AudioPlayer.player.start(as);
+//        } catch (IOException e){
+//            e.printStackTrace();
+//        }
+//
+        try{
+            URL url = Main.class.getResource("chaching.au");
+            Clip clip = AudioSystem.getClip();
+            // getAudioInputStream() also accepts a File or InputStream
+            AudioInputStream ais = AudioSystem.getAudioInputStream(url);
+            clip.open(ais);
+            clip.start();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (UnsupportedAudioFileException e) {
             e.printStackTrace();
         }
     }
