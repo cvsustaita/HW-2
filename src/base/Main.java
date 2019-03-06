@@ -4,12 +4,10 @@ import edu.utep.cs.cs3331.pw.Item;
 import edu.utep.cs.cs3331.pw.PriceFinder;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.io.*;
 import java.net.URI;
-
+import java.text.DecimalFormat;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -45,7 +43,6 @@ public class Main extends JFrame {
     public Main(Dimension dim) {
         super("Price Watcher");
         setSize(dim);
-        
         configureUI();
         //setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -58,16 +55,20 @@ public class Main extends JFrame {
      * Find the current price of the watched item and display it 
      * along with a percentage price change. */
     private void refreshButtonClicked(ActionEvent event) {
-    	//--
-    	//-- WRITE YOUR CODE HERE!
-    	//--
 
         double oldPrice = item.getItemPrice();
         double updatedPrice = priceFinder.getRandomPrice();
         double increase = updatedPrice - oldPrice;
         double percentIncrease = increase / oldPrice * 100;
 
+        DecimalFormat df = new DecimalFormat("#.00");
+        String priceFormated = df.format(updatedPrice);
+        updatedPrice = Double.parseDouble(priceFormated);
+
         item.setItemPrice(updatedPrice);
+
+        priceFormated = df.format(percentIncrease);
+        percentIncrease = Double.parseDouble(priceFormated);
         item.setItemChange(percentIncrease);
 
         if (item.getItemChange() < 0) playSound();
@@ -94,10 +95,6 @@ public class Main extends JFrame {
      * Launch a (default) web browser by supplying the URL of
      * the item. */
     private void viewPageClicked() {
-    	//--
-    	//-- WRITE YOUR CODE HERE!
-    	//--
-
         System.out.println("Web page displaying in your browser");
         try {
             Desktop desktop = Desktop.getDesktop();
@@ -129,8 +126,6 @@ public class Main extends JFrame {
 
         item.setItemName("LED Monitor");
         item.setURL("https://www.bestbuy.com/site/samsung-ue590-series-28-led-4k-uhd-monitor-black/5484022.p?skuId=5484022");
-//        item.setMaxPrice(369.99);
-//        item.setMinPrice(61.67);
         item.setItemPrice(370.0);
         item.setItemChange(0);
         item.setItemDate(item.getItemDate());

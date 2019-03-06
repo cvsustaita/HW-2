@@ -5,7 +5,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URL;
-
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
@@ -52,6 +51,8 @@ public class ItemView extends JPanel{
         int x = 20, y = 30;
 
         Image image = getImage("websiteIcon.png");
+        Font italics = new Font("Arial", Font.ITALIC, 12);
+        g.setFont(italics);
         g.drawImage(image, x,x-5, x+x, x+x-5, 0, 0, image.getWidth(null), image.getHeight(null), null);
         y += 20;
         g.drawString("Hi, I am your item!", x, y);
@@ -62,22 +63,31 @@ public class ItemView extends JPanel{
         y += 20;
         g.drawString("Price:$", x, y);
         y += 20;
-        g.drawString("Change: %" + Main.item.getItemChange(), x, y);
+        g.drawString("Change: %", x, y);
         y += 20;
         g.drawString("Added: " + Main.item.getItemDate() + " ($370.00)", x, y);
-        Font font = new Font("Arial", Font.BOLD, 13);
+
+        Font font = new Font("Arial", Font.BOLD, 12);
         g.setFont(font);
         g.drawString(Main.item.getItemName(), x + 40, 70);
+
         g.setColor(Color.BLUE);
         String price = Double.toString(Main.item.getItemPrice());
         g.drawString(price, x + 40, 110);
+
+        String changeString = Double.toString(Main.item.getItemChange());
+
+        if(Main.item.getItemPrice() < 370) {
+            g.setColor(Color.GREEN);
+            g.drawString(changeString, x + 65, 130);
+        } if(Main.item.getItemPrice() > 370) {
+            g.setColor(Color.RED);
+            g.drawString(changeString, x + 65, 130);
+        }
     }
     
     /** Return true if the given screen coordinate is inside the viewPage icon. */
     private boolean isViewPageClicked(int x, int y) {
-    	//--
-    	//-- WRITE YOUR CODE HERE
-    	//--
     	return new Rectangle(20, 20, 30, 20).contains(x,  y);
     }
 
