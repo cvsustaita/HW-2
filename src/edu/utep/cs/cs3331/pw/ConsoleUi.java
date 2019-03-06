@@ -21,7 +21,7 @@ public class ConsoleUi {
         System.out.print("Item name: " + item.getItemName() + "\nItem URL: " + item.getURL());
         showPrice();
         showChange();
-        System.out.println("Added: " + item.getItemDate() + " Max Price: $" + item.getMaxPrice());
+        System.out.println("Added: " + item.getItemDate());
     }
 
     public int promptUser() {
