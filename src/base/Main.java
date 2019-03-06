@@ -79,16 +79,6 @@ public class Main extends JFrame {
     }
 
     private void playSound(){
-        //getResource();
-        //InputStream is = //new FileInputStream(Main.class.getResource);
-//        InputStream is = Main.class.getResourceAsStream("chaching.au");
-//        try {
-//            AudioStream as = new AudioStream(is);
-//            AudioPlayer.player.start(as);
-//        } catch (IOException e){
-//            e.printStackTrace();
-//        }
-//
         try{
             URL url = Main.class.getResource("chaching.au");
             Clip clip = AudioSystem.getClip();
