@@ -77,10 +77,10 @@ public class ItemView extends JPanel{
 
         String changeString = Double.toString(Main.item.getItemChange());
 
-        if(Main.item.getItemPrice() < 370) {
+        if(Main.item.getItemChange() < 0) {
             g.setColor(Color.GREEN);
             g.drawString(changeString, x + 65, 130);
-        } if(Main.item.getItemPrice() > 370) {
+        } else {
             g.setColor(Color.RED);
             g.drawString(changeString, x + 65, 130);
         }
