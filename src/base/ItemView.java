@@ -74,7 +74,7 @@ public class ItemView extends JPanel{
         y += 20;
         g.drawString("Change: %" + Main.item.getItemChange(), x, y);
         y += 20;
-        g.drawString("Added: " + Main.item.getItemDate(), x, y);
+        g.drawString("Added: " + Main.item.getItemDate() + " ($370.00)", x, y);
         Font font = new Font("Arial", Font.BOLD, 13);
         g.setFont(font);
         g.drawString(Main.item.getItemName(), x + 40, 70);

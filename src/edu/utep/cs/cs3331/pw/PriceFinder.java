@@ -5,10 +5,6 @@ import java.util.Random;
 
 public class PriceFinder {
 
-    public PriceFinder(String URL) {
-        String URL1 = URL;
-    }
-
     public double getRandomPrice(){
         Random ran = new Random();
         double maxPrice = 500.00;

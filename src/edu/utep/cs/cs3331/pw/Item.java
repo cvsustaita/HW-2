@@ -48,7 +48,7 @@ public class Item {
     }
 
     public String getItemDate() {
-        DateFormat dateFormat = new SimpleDateFormat("mm/dd/yyy");
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyy");
         Date date = new Date();
         String currentDate = dateFormat.format(date);
         itemDate = currentDate;

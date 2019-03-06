@@ -1,6 +1,7 @@
 package base;
 
 import edu.utep.cs.cs3331.pw.Item;
+import edu.utep.cs.cs3331.pw.PriceFinder;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 
@@ -24,6 +25,7 @@ import javax.swing.SwingUtilities;
 @SuppressWarnings("serial")
 public class Main extends JFrame {
     static Item item = new Item();
+    private PriceFinder priceFinder = new PriceFinder();
 
     /** Default dimension of the dialog. */
     private final static Dimension DEFAULT_SIZE = new Dimension(400, 300);
@@ -71,8 +73,16 @@ public class Main extends JFrame {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        item.setItemPrice(item.getRandomPrice());
-        item.setItemChange(item.change());
+
+        double oldPrice = item.getItemPrice();
+        double updatedPrice = priceFinder.getRandomPrice();
+        double increase = updatedPrice - oldPrice;
+        double percentIncrease = increase / oldPrice * 100;
+
+        item.setItemPrice(updatedPrice);
+        item.setItemChange(percentIncrease);
+        //item.setItemChange(item.change());
+
         super.repaint();
     	showMessage("Updated item price: "+item.getItemPrice());
     }
@@ -116,10 +126,10 @@ public class Main extends JFrame {
 
         item.setItemName("LED Monitor");
         item.setURL("https://www.bestbuy.com/site/samsung-ue590-series-28-led-4k-uhd-monitor-black/5484022.p?skuId=5484022");
-        item.setMaxPrice(369.99);
-        item.setMinPrice(61.67);
-        item.setItemPrice(item.getRandomPrice());
-        item.setItemChange(item.change());
+//        item.setMaxPrice(369.99);
+//        item.setMinPrice(61.67);
+        item.setItemPrice(370.0);
+        item.setItemChange(0);
         item.setItemDate(item.getItemDate());
     }
       
