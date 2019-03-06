@@ -62,8 +62,23 @@ public class Main extends JFrame {
     	//-- WRITE YOUR CODE HERE!
     	//--
 
+        double oldPrice = item.getItemPrice();
+        double updatedPrice = priceFinder.getRandomPrice();
+        double increase = updatedPrice - oldPrice;
+        double percentIncrease = increase / oldPrice * 100;
+
+        item.setItemPrice(updatedPrice);
+        item.setItemChange(percentIncrease);
+
+        if (item.getItemChange() < 0) playSound();
+
+        super.repaint();
+    	showMessage("Updated item price: "+item.getItemPrice());
+    }
+
+    private void playSound(){
         try {
-            InputStream is = new FileInputStream(new File("/Users/erikmacik/IdeaProjects/HW-2/src/base/cuckoo.au"));
+            InputStream is = new FileInputStream(new File("/Users/erikmacik/IdeaProjects/HW-2/src/base/chaching.au"));
             try {
                 AudioStream as = new AudioStream(is);
                 AudioPlayer.player.start(as);
@@ -73,18 +88,6 @@ public class Main extends JFrame {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
-        double oldPrice = item.getItemPrice();
-        double updatedPrice = priceFinder.getRandomPrice();
-        double increase = updatedPrice - oldPrice;
-        double percentIncrease = increase / oldPrice * 100;
-
-        item.setItemPrice(updatedPrice);
-        item.setItemChange(percentIncrease);
-        //item.setItemChange(item.change());
-
-        super.repaint();
-    	showMessage("Updated item price: "+item.getItemPrice());
     }
     
     /** Callback to be invoked when the view-page icon is clicked.

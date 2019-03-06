@@ -1,8 +1,5 @@
 package base;
 
-import edu.utep.cs.cs3331.pw.ConsoleUi;
-import edu.utep.cs.cs3331.pw.Item;
-
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -16,11 +13,6 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class ItemView extends JPanel{
-
-//    Item item = new Item("LED Monitor", "https://www.bestbuy.com/site/samsung-ue590-series-28-led-4k-uhd-monitor-black/5484022.p?skuId=5484022",
-//            369.99, 61.67, item.getRandomPrice(), item.change());
-
-    //private ConsoleUi ui = new ConsoleUi(item);
 
 	/** Interface to notify a click on the view page icon. */
 	public interface ClickListener {
@@ -52,8 +44,6 @@ public class ItemView extends JPanel{
     public void setClickListener(ClickListener listener) {
     	this.listener = listener;
     }
-
-    static Image webImage;
 
     /** Overridden here to display the details of the item. */
     @Override
