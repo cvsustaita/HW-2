@@ -3,12 +3,9 @@ package base;
 import edu.utep.cs.cs3331.pw.Item;
 import edu.utep.cs.cs3331.pw.PriceFinder;
 
-import java.applet.Applet;
-import java.applet.AudioClip;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.*;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.text.DecimalFormat;
@@ -22,7 +19,7 @@ import javax.sound.sampled.*;
 */
 @SuppressWarnings("serial")
 public class Main extends JFrame {
-    static Item item = new Item();
+    private Item item = new Item();
     private PriceFinder priceFinder = new PriceFinder();
 
     /** Default dimension of the dialog. */
@@ -56,7 +53,7 @@ public class Main extends JFrame {
      * along with a percentage price change. */
     private void refreshButtonClicked(ActionEvent event) {
 
-        double oldPrice = item.getItemPrice();
+        double oldPrice = item.getInitialPrice();
         double updatedPrice = priceFinder.getRandomPrice();
         double increase = updatedPrice - oldPrice;
         double percentIncrease = increase / oldPrice * 100;
@@ -65,17 +62,18 @@ public class Main extends JFrame {
         String priceFormated = df.format(updatedPrice);
         updatedPrice = Double.parseDouble(priceFormated);
 
-        item.setItemPrice(updatedPrice);
+        //item.setInitialPrice(updatedPrice);
 
         priceFormated = df.format(percentIncrease);
         percentIncrease = Double.parseDouble(priceFormated);
-        item.setItemChange(percentIncrease);
+        item.setRecentPrice(updatedPrice);
+        item.setPriceChange(percentIncrease);
 
-        if (item.getItemChange() < 0)
+        if (item.getPriceChange() < 0)
             playSound();
 
         super.repaint();
-    	showMessage("Updated item price: "+item.getItemPrice());
+    	showMessage("Updated item price: " + item.getRecentPrice());
     }
 
     private void playSound(){
@@ -121,18 +119,20 @@ public class Main extends JFrame {
         		BorderFactory.createEmptyBorder(10,16,0,16),
         		BorderFactory.createLineBorder(Color.GRAY)));
         board.setLayout(new GridLayout(1,1));
-        itemView = new ItemView();
+
+        item.setName("LED Monitor");
+        item.setURL("https://www.bestbuy.com/site/samsung-ue590-series-28-led-4k-uhd-monitor-black/5484022.p?skuId=5484022");
+        item.setInitialPrice(370.0);
+        item.setRecentPrice(370.0);
+        item.setPriceChange(0);
+        item.setDateAdded(item.getDateAdded());
+        itemView = new ItemView(item);
+
         itemView.setClickListener(this::viewPageClicked);
         board.add(itemView);
         add(board, BorderLayout.CENTER);
         msgBar.setBorder(BorderFactory.createEmptyBorder(10,16,10,0));
         add(msgBar, BorderLayout.SOUTH);
-
-        item.setItemName("LED Monitor");
-        item.setURL("https://www.bestbuy.com/site/samsung-ue590-series-28-led-4k-uhd-monitor-black/5484022.p?skuId=5484022");
-        item.setItemPrice(370.0);
-        item.setItemChange(0);
-        item.setItemDate(item.getItemDate());
     }
       
     /** Create a control panel consisting of a refresh button. */

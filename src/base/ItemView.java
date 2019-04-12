@@ -1,5 +1,7 @@
 package base;
 
+import edu.utep.cs.cs3331.pw.Item;
+
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -11,7 +13,10 @@ import javax.swing.JPanel;
 /** A special panel to display the detail of an item. */
 
 @SuppressWarnings("serial")
+
 public class ItemView extends JPanel{
+
+    private Item item;
 
 	/** Interface to notify a click on the view page icon. */
 	public interface ClickListener {
@@ -27,7 +32,8 @@ public class ItemView extends JPanel{
     private ClickListener listener;
     
     /** Create a new instance. */
-    public ItemView() {
+    public ItemView(Item item) {
+        this.item = item;
         setPreferredSize(new Dimension(100, 160));
         setBackground(Color.WHITE);
         addMouseListener(new MouseAdapter() {
@@ -59,25 +65,25 @@ public class ItemView extends JPanel{
         y += 20;
         g.drawString("Name: ", x, 70);
         y += 20;
-        g.drawString("URL: " + Main.item.getURL(), x, y);
+        g.drawString("URL: " + item.getURL(), x, y);
         y += 20;
         g.drawString("Price:$", x, y);
         y += 20;
         g.drawString("Change: %", x, y);
         y += 20;
-        g.drawString("Added: " + Main.item.getItemDate() + " ($370.00)", x, y);
+        g.drawString("Added: " + item.getDateAdded() + " $" + item.getInitialPrice(), x, y);
 
         Font font = new Font("Arial", Font.BOLD, 12);
         g.setFont(font);
-        g.drawString(Main.item.getItemName(), x + 40, 70);
+        g.drawString(item.getName(), x + 40, 70);
 
         g.setColor(Color.BLUE);
-        String price = Double.toString(Main.item.getItemPrice());
+        String price = Double.toString(item.getRecentPrice());
         g.drawString(price, x + 40, 110);
 
-        String changeString = Double.toString(Main.item.getItemChange());
+        String changeString = Double.toString(item.getPriceChange());
 
-        if(Main.item.getItemChange() < 0) {
+        if(item.getPriceChange() < 0) {
             g.setColor(Color.GREEN);
             g.drawString(changeString, x + 65, 130);
         } else {

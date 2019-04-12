@@ -4,62 +4,71 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Item {
-    private String itemName;
+    private String name;
     private String URL;
-    private String itemDate;
-    private double itemPrice;
-    private double itemChange;
+    private String dateAdded;
+    private double initialPrice;
+    private double recentPrice;
+    private double priceChange;
 
     public Item(){}
 
-    public Item(String itemName, String URL, String itemDate, double itemPrice) {
-        this.itemName = itemName;
+    public Item(String name, String URL, String dateAdded, double initialPrice) {
+        this.name = name;
         this.URL = URL;
-        this.itemDate = itemDate;
-        this.itemPrice = itemPrice;
+        this.dateAdded = dateAdded;
+        this.initialPrice = initialPrice;
     }
 
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setURL(String URL) {
         this.URL = URL;
     }
 
-    public void setItemDate(String itemDate) {
-        this.itemDate = itemDate;
+    public void setDateAdded(String dateAdded) {
+        this.dateAdded = dateAdded;
     }
 
-    public void setItemPrice(double itemPrice){
-        this.itemPrice = itemPrice;
+    public void setInitialPrice(double initialPrice){
+        this.initialPrice = initialPrice;
     }
 
-    public void setItemChange(double itemChange) {
-        this.itemChange = itemChange;
+    public void setPriceChange(double priceChange) {
+        this.priceChange = priceChange;
     }
 
-    public String getItemName() {
-        return itemName;
+    public String getName() {
+        return name;
     }
 
     public String getURL() {
         return URL;
     }
 
-    public String getItemDate() {
+    public String getDateAdded() {
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyy");
         Date date = new Date();
         String currentDate = dateFormat.format(date);
-        itemDate = currentDate;
-        return itemDate;
+        dateAdded = currentDate;
+        return dateAdded;
     }
 
-    public double getItemPrice(){
-        return itemPrice;
+    public double getInitialPrice(){
+        return initialPrice;
     }
 
-    public double getItemChange() {
-        return itemChange;
+    public double getPriceChange() {
+        return priceChange;
+    }
+
+    public double getRecentPrice() {
+        return recentPrice;
+    }
+
+    public void setRecentPrice(double recentPrice) {
+        this.recentPrice = recentPrice;
     }
 }
