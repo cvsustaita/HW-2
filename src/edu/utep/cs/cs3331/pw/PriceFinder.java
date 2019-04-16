@@ -1,5 +1,4 @@
 package edu.utep.cs.cs3331.pw;
-
 import java.text.DecimalFormat;
 import java.util.Random;
 

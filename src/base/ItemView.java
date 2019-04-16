@@ -1,7 +1,6 @@
 package base;
 
 import edu.utep.cs.cs3331.pw.Item;
-
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -18,19 +17,18 @@ public class ItemView extends JPanel{
 
     private Item item;
 
-	/** Interface to notify a click on the view page icon. */
-	public interface ClickListener {
-		
-		/** Callback to be invoked when the view page icon is clicked. */
-		void clicked();
-	}
-	
-	/** Directory for image files: src/image in Eclipse. */
-	private final static String IMAGE_DIR = "/image/";
-        
-	/** View-page clicking listener. */
+    /** Interface to notify a click on the view page icon. */
+    public interface ClickListener {
+        /** Callback to be invoked when the view page icon is clicked. */
+        void clicked();
+    }
+
+    /** Directory for image files: src/image in Eclipse. */
+    private final static String IMAGE_DIR = "/image/";
+
+    /** View-page clicking listener. */
     private ClickListener listener;
-    
+
     /** Create a new instance. */
     public ItemView(Item item) {
         this.item = item;
@@ -38,21 +36,21 @@ public class ItemView extends JPanel{
         setBackground(Color.WHITE);
         addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-            	if (isViewPageClicked(e.getX(), e.getY()) && listener != null) {
-            		listener.clicked();
-            	}
+                if (isViewPageClicked(e.getX(), e.getY()) && listener != null) {
+                    listener.clicked();
+                }
             }
         });
     }
-        
+
     /** Set the view-page click listener. */
     public void setClickListener(ClickListener listener) {
-    	this.listener = listener;
+        this.listener = listener;
     }
 
     /** Overridden here to display the details of the item. */
     @Override
-	public void paintComponent(Graphics g) {
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
         int x = 20, y = 30;
 
@@ -91,16 +89,16 @@ public class ItemView extends JPanel{
             g.drawString(changeString, x + 65, 130);
         }
     }
-    
+
     /** Return true if the given screen coordinate is inside the viewPage icon. */
     private boolean isViewPageClicked(int x, int y) {
-    	return new Rectangle(20, 20, 30, 20).contains(x,  y);
+        return new Rectangle(20, 20, 30, 20).contains(x,  y);
     }
 
     /** Return the image stored in the given file. */
     public Image getImage(String file) {
         try {
-        	URL url = new URL(getClass().getResource(IMAGE_DIR), file);
+            URL url = new URL(getClass().getResource(IMAGE_DIR), file);
             return ImageIO.read(url);
         } catch (IOException e) {
             e.printStackTrace();
