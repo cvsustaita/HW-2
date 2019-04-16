@@ -108,9 +108,13 @@ public class Main extends JFrame {
     /** Configure UI. */
     private void configureUI() {
         setLayout(new BorderLayout());
-        JPanel control = makeControlPanel();
-        control.setBorder(BorderFactory.createEmptyBorder(10,16,0,16));
+        JPanel control = new JPanel();
+        control.setLayout(new BorderLayout());
+        control.add(makeControlPanel(), BorderLayout.NORTH);
+        control.add(makeButtonPanel(), BorderLayout.SOUTH);
+        //control.setBorder(BorderFactory.createEmptyBorder(10,16,0,16));
         add(control, BorderLayout.NORTH);
+
         JPanel board = new JPanel();
         board.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createEmptyBorder(10,16,0,16),
