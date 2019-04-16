@@ -137,39 +137,119 @@ public class Main extends JFrame {
 
     /** Create a control panel consisting of a refresh button. */
     private JPanel makeControlPanel() {
-
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEADING));
         JMenuBar menuBar = new JMenuBar();
 
         JMenu App = new JMenu("App");
-        App.setMnemonic(KeyEvent.VK_M);
         menuBar.add(App);
 
-        JMenuItem menuItem2 = new JMenuItem("Exit", KeyEvent.VK_C);
-        //menuItem2.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.ALT_MASK));
-        App.add(menuItem2);
-        panel.add(menuBar);
-        menuItem2.addActionListener(this::exitClicked);
+        JMenuItem about = new JMenuItem("About");
+        App.add(about);
+        App.addSeparator();
+
+        JMenuItem exit = new JMenuItem("Exit");
+        App.add(exit);
+
+        exit.addActionListener(this::exitClicked);
+
+        /**************************************************************/
 
         JMenu Item = new JMenu("Item");
-        //Item.setMnemonic(KeyEvent.VK_M);
-        //menu.getAccessibleContext().setAccessibleDescription("Main menu");
         menuBar.add(Item);
 
-        JMenuItem menuItem = new JMenuItem("Check Prices", KeyEvent.VK_C);
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.ALT_MASK));
-        //menuItem.getAccessibleContext().setAccessibleDescription("Check the price");
-        Item.add(menuItem);
-        panel.add(menuBar);
+        JMenuItem check = new JMenuItem("Check Prices");
+        check.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.ALT_MASK));
+        Item.add(check);
+        check.addActionListener(this::refreshButtonClicked);
+
+        JMenuItem addItem = new JMenuItem("Add Item");
+        addItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.ALT_MASK));
+        Item.add(addItem);
+        Item.addSeparator();
+
+        JMenuItem search = new JMenuItem("Search");
+        search.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.ALT_MASK));
+        Item.add(search);
+
+        JMenuItem selectFirst = new JMenuItem("Select First");
+        selectFirst.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, ActionEvent.ALT_MASK));
+        Item.add(selectFirst);
+
+        JMenuItem selectLast = new JMenuItem("Select Last"); //new ImageIcon
+        selectLast.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, ActionEvent.ALT_MASK));
+        Item.add(selectLast);
+        Item.addSeparator();
+
+        JMenu selected = new JMenu("Selected");
+        Item.add(selected);
+
+        JMenuItem price = new JMenuItem("Price");
+        price.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.ALT_MASK));
+        selected.add(price);
+
+        JMenuItem view = new JMenuItem("View");
+        view.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, ActionEvent.ALT_MASK));
+        selected.add(view);
+
+        JMenuItem edit = new JMenuItem("Edit");
+        edit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.ALT_MASK));
+        selected.add(edit);
+
+        JMenuItem remove = new JMenuItem("Remove");
+        remove.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, ActionEvent.ALT_MASK));
+        selected.add(remove);
+        selected.addSeparator();
+
+        JMenuItem copyName = new JMenuItem("Copy name");
+        selected.add(copyName);
+
+        JMenuItem copyURL = new JMenuItem("Copy URL");
+        selected.add(copyURL);
+
+        JMenuItem copyItem = new JMenuItem("Copy item");
+        selected.add(copyItem);
+
+        /**************************************************************/
 
         JMenu Sort = new JMenu("Sort");
         menuBar.add(Sort);
+
+        JRadioButton addedOldest = new JRadioButton("Added oldest");
+        Sort.add(addedOldest);
+
+        JRadioButton addedNewest = new JRadioButton("Added newest");
+        Sort.add(addedNewest);
+        Sort.addSeparator();
+
+        JRadioButton nameAscending = new JRadioButton("Name ascending");
+        Sort.add(nameAscending);
+
+        JRadioButton nameDescending = new JRadioButton("Name descending");
+        Sort.add(nameDescending);
+        Sort.addSeparator();
+
+        JRadioButton priceChange = new JRadioButton("Price change(%)");
+        Sort.add(priceChange);
+
+        JRadioButton priceLow = new JRadioButton("Price low($)");
+        Sort.add(priceLow);
+
+        JRadioButton priceHigh = new JRadioButton("Price high($)");
+        Sort.add(priceHigh);
+
+        /*
+        birdButton.setActionCommand(birdString);
+        birdButton.setSelected(true);
+         birdButton.addActionListener(this);
+        */
 
         /*JButton refreshButton = new JButton("Refresh");
         refreshButton.setFocusPainted(false);
         refreshButton.addActionListener(this::refreshButtonClicked);
         panel.add(refreshButton);
         */
+
+        panel.add(menuBar);
 
         return panel;
     }
