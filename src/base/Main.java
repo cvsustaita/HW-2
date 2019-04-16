@@ -6,10 +6,13 @@ import edu.utep.cs.cs3331.pw.PriceFinder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.text.DecimalFormat;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.sound.sampled.*;
 
@@ -78,15 +81,10 @@ public class Main extends JFrame {
         try{
             URL url = Main.class.getResource("chaching.au");
             Clip clip = AudioSystem.getClip();
-            // getAudioInputStream() also accepts a File or InputStream
             AudioInputStream ais = AudioSystem.getAudioInputStream(url);
             clip.open(ais);
             clip.start();
-        } catch (LineUnavailableException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (UnsupportedAudioFileException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -176,6 +174,39 @@ public class Main extends JFrame {
         return panel;
     }
 
+    private JPanel makeButtonPanel(){
+        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEADING));
+        JToolBar buttons = new JToolBar();
+
+        URL url = null;
+        try {
+            url = new URL(getClass().getResource("/image/"), "websiteIcon.png");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        ImageIcon icon = new ImageIcon(new ImageIcon(url).getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
+
+        JButton jb = new JButton();
+        jb.setIcon(icon);
+
+        buttons.add(jb);
+        buttons.add(new JButton());
+        panel.add(buttons);
+        return panel;
+    }
+
+    private Image getScaledImage(Image srcImg, int w, int h){
+        BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = resizedImg.createGraphics();
+
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2.drawImage(srcImg, 0, 0, w, h, null);
+        g2.dispose();
+
+        return resizedImg;
+    }
+
     /** Show briefly the given string in the message bar. */
     private void showMessage(String msg) {
         msgBar.setText(msg);
@@ -183,6 +214,7 @@ public class Main extends JFrame {
             try {
                 Thread.sleep(3 * 1000); // 3 seconds
             } catch (InterruptedException e) {
+
             }
             if (msg.equals(msgBar.getText())) {
                 SwingUtilities.invokeLater(() -> msgBar.setText(" "));
