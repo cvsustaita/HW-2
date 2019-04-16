@@ -7,12 +7,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.io.*;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.text.DecimalFormat;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.sound.sampled.*;
 
@@ -258,22 +255,35 @@ public class Main extends JFrame {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEADING));
         JToolBar buttons = new JToolBar();
 
-        URL url = null;
+        buttons.add(new JButton(getIconImage("blue check.png")));
+        buttons.add(new JButton(getIconImage("blue plus.png")));
+        buttons.add(new JButton(getIconImage("blue search.png")));
+        buttons.add(new JButton(getIconImage("blue left.png")));
+        buttons.add(new JButton(getIconImage("blue right.png")));
+
+        buttons.addSeparator();
+
+        buttons.add(new JButton(getIconImage("websiteIcon.png")));
+        buttons.add(new JButton(getIconImage("websiteIcon.png")));
+        buttons.add(new JButton(getIconImage("websiteIcon.png")));
+        buttons.add(new JButton(getIconImage("websiteIcon.png")));
+
+        buttons.addSeparator();
+
+        buttons.add(new JButton(getIconImage("websiteIcon.png")));
+
+        panel.add(buttons);
+        return panel;
+    }
+
+    private ImageIcon getIconImage(String filename){
         try {
-            url = new URL(getClass().getResource("/image/"), "websiteIcon.png");
+            URL url = new URL(getClass().getResource("/image/"), filename);
+            return new ImageIcon(new ImageIcon(url).getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        ImageIcon icon = new ImageIcon(new ImageIcon(url).getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
-
-        JButton jb = new JButton();
-        jb.setIcon(icon);
-
-        buttons.add(jb);
-        buttons.add(new JButton());
-        panel.add(buttons);
-        return panel;
+        return null;
     }
 
     private Image getScaledImage(Image srcImg, int w, int h){
