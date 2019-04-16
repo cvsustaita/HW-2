@@ -7,9 +7,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.io.*;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.text.DecimalFormat;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.sound.sampled.*;
 
@@ -108,13 +111,9 @@ public class Main extends JFrame {
     /** Configure UI. */
     private void configureUI() {
         setLayout(new BorderLayout());
-        JPanel control = new JPanel();
-        control.setLayout(new BorderLayout());
-        control.add(makeControlPanel(), BorderLayout.NORTH);
-        control.add(makeButtonPanel(), BorderLayout.SOUTH);
-        //control.setBorder(BorderFactory.createEmptyBorder(10,16,0,16));
+        JPanel control = makeControlPanel();
+        control.setBorder(BorderFactory.createEmptyBorder(10,16,0,16));
         add(control, BorderLayout.NORTH);
-
         JPanel board = new JPanel();
         board.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createEmptyBorder(10,16,0,16),
@@ -259,35 +258,22 @@ public class Main extends JFrame {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEADING));
         JToolBar buttons = new JToolBar();
 
-        buttons.add(new JButton(getIconImage("blue check.png")));
-        buttons.add(new JButton(getIconImage("blue plus.png")));
-        buttons.add(new JButton(getIconImage("blue search.png")));
-        buttons.add(new JButton(getIconImage("blue left.png")));
-        buttons.add(new JButton(getIconImage("blue right.png")));
-
-        buttons.addSeparator();
-
-        buttons.add(new JButton(getIconImage("websiteIcon.png")));
-        buttons.add(new JButton(getIconImage("websiteIcon.png")));
-        buttons.add(new JButton(getIconImage("websiteIcon.png")));
-        buttons.add(new JButton(getIconImage("websiteIcon.png")));
-
-        buttons.addSeparator();
-
-        buttons.add(new JButton(getIconImage("websiteIcon.png")));
-
-        panel.add(buttons);
-        return panel;
-    }
-
-    private ImageIcon getIconImage(String filename){
+        URL url = null;
         try {
-            URL url = new URL(getClass().getResource("/image/"), filename);
-            return new ImageIcon(new ImageIcon(url).getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
+            url = new URL(getClass().getResource("/image/"), "websiteIcon.png");
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+
+        ImageIcon icon = new ImageIcon(new ImageIcon(url).getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
+
+        JButton jb = new JButton();
+        jb.setIcon(icon);
+
+        buttons.add(jb);
+        buttons.add(new JButton());
+        panel.add(buttons);
+        return panel;
     }
 
     private Image getScaledImage(Image srcImg, int w, int h){
