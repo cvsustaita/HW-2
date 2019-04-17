@@ -7,15 +7,20 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URL;
 import javax.imageio.ImageIO;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 /** A special panel to display the detail of an item. */
 
 @SuppressWarnings("serial")
 
-public class ItemView extends JPanel{
+public class ItemView extends JPanel implements ListCellRenderer<Item> {
 
     private Item item;
+
+    @Override
+    public Component getListCellRendererComponent(JList<? extends Item> list, Item value, int index, boolean isSelected, boolean cellHasFocus) {
+        return null;
+    }
 
     /** Interface to notify a click on the view page icon. */
     public interface ClickListener {
