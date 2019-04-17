@@ -279,7 +279,10 @@ public class Main extends JFrame {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEADING));
         JToolBar buttons = new JToolBar();
 
-        buttons.add(new JButton(getIconImage("blue check.png")));
+        JButton blueCheck = new JButton(getIconImage("blue check.png"));
+        buttons.add(blueCheck);
+        blueCheck.addActionListener(this::refreshButtonClicked);
+        //buttons.add(new JButton(getIconImage("blue check.png")));
         buttons.add(new JButton(getIconImage("blue plus.png")));
         buttons.add(new JButton(getIconImage("blue search.png")));
         buttons.add(new JButton(getIconImage("blue left.png")));
