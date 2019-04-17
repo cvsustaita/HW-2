@@ -13,14 +13,9 @@ import javax.swing.*;
 
 @SuppressWarnings("serial")
 
-public class ItemView extends JPanel implements ListCellRenderer<Item> {
+public class ItemView extends JPanel {
 
-    private Item item;
-
-    @Override
-    public Component getListCellRendererComponent(JList<? extends Item> list, Item value, int index, boolean isSelected, boolean cellHasFocus) {
-        return null;
-    }
+    Item item;
 
     /** Interface to notify a click on the view page icon. */
     public interface ClickListener {
@@ -35,8 +30,8 @@ public class ItemView extends JPanel implements ListCellRenderer<Item> {
     private ClickListener listener;
 
     /** Create a new instance. */
-    public ItemView(Item item) {
-        this.item = item;
+    public ItemView() {
+        //this.item = item;
         setPreferredSize(new Dimension(100, 160));
         setBackground(Color.WHITE);
         addMouseListener(new MouseAdapter() {
@@ -68,6 +63,9 @@ public class ItemView extends JPanel implements ListCellRenderer<Item> {
         y += 20;
         g.drawString("Name: ", x, 70);
         y += 20;
+
+        System.out.println("---------------------------"+item);
+
         g.drawString("URL: " + item.getURL(), x, y);
         y += 20;
         g.drawString("Price:$", x, y);

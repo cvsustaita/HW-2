@@ -6,11 +6,9 @@ import edu.utep.cs.cs3331.pw.PriceFinder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
 import java.net.URI;
 import java.net.URL;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import javax.swing.*;
 import javax.sound.sampled.*;
 
@@ -21,16 +19,17 @@ import javax.sound.sampled.*;
  */
 @SuppressWarnings("serial")
 public class Main extends JFrame {
+
     private Item item = new Item();
-    private DefaultListModel<ItemView> itemList = new DefaultListModel<>();
-    private JList jItemList = new JList(itemList);
+    private DefaultListModel<Item> itemList = new DefaultListModel<>();
+    private JList<Item> jItemList = new JList<>(itemList);
     private PriceFinder priceFinder = new PriceFinder();
 
     /** Default dimension of the dialog. */
     private final static Dimension DEFAULT_SIZE = new Dimension(400, 300);
 
     /** Special panel to display the watched item. */
-    private ItemView itemView;
+    private ItemViewRenderer itemRenderer;
 
     /** Message bar to display various messages. */
     private JLabel msgBar = new JLabel(" ");
@@ -125,7 +124,6 @@ public class Main extends JFrame {
         board.setLayout(new GridLayout(1,1));
 
         Item item = new Item();
-
         item.setName("LED Monitor");
         item.setURL("https://www.bestbuy.com/site/samsung-ue590-series-28-led-4k-uhd-monitor-black/5484022.p?skuId=5484022");
         item.setInitialPrice(370.0);
@@ -133,12 +131,11 @@ public class Main extends JFrame {
         item.setPriceChange(0);
         item.setDateAdded(item.getDateAdded());
 
-        itemView = new ItemView(item);
-        itemList.addElement(itemView);
+        itemList.addElement(item);
 
-        jItemList.setCellRenderer(new ItemView(item));
+        jItemList.setCellRenderer(new ItemViewRenderer());
 
-        itemView.setClickListener(this::viewPageClicked);
+        //itemRenderer.setClickListener(this::viewPageClicked);
         board.add(new JScrollPane(jItemList));
         add(board, BorderLayout.CENTER);
         msgBar.setBorder(BorderFactory.createEmptyBorder(10,16,10,0));
