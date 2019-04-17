@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.net.URI;
 import java.net.URL;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import javax.swing.*;
 import javax.sound.sampled.*;
 
@@ -21,6 +22,8 @@ import javax.sound.sampled.*;
 @SuppressWarnings("serial")
 public class Main extends JFrame {
     private Item item = new Item();
+    private DefaultListModel<ItemView> itemList = new DefaultListModel<>();
+    private JList jItemList = new JList(itemList);
     private PriceFinder priceFinder = new PriceFinder();
 
     /** Default dimension of the dialog. */
@@ -111,7 +114,7 @@ public class Main extends JFrame {
         JPanel control = new JPanel();
         control.setLayout(new BorderLayout());
         control.add(makeControlPanel(), BorderLayout.NORTH);
-        control.add(makeButtonPanel(), BorderLayout.SOUTH);
+        control.add(makeButtonPanel(), BorderLayout.CENTER);
         //control.setBorder(BorderFactory.createEmptyBorder(10,16,0,16));
         add(control, BorderLayout.NORTH);
 
@@ -121,16 +124,20 @@ public class Main extends JFrame {
                 BorderFactory.createLineBorder(Color.GRAY)));
         board.setLayout(new GridLayout(1,1));
 
+        Item item = new Item();
+
         item.setName("LED Monitor");
         item.setURL("https://www.bestbuy.com/site/samsung-ue590-series-28-led-4k-uhd-monitor-black/5484022.p?skuId=5484022");
         item.setInitialPrice(370.0);
         item.setRecentPrice(370.0);
         item.setPriceChange(0);
         item.setDateAdded(item.getDateAdded());
+
         itemView = new ItemView(item);
+        itemList.addElement(itemView);
 
         itemView.setClickListener(this::viewPageClicked);
-        board.add(itemView);
+        board.add(new JScrollPane(jItemList));
         add(board, BorderLayout.CENTER);
         msgBar.setBorder(BorderFactory.createEmptyBorder(10,16,10,0));
         add(msgBar, BorderLayout.SOUTH);
@@ -215,27 +222,38 @@ public class Main extends JFrame {
         JMenu Sort = new JMenu("Sort");
         menuBar.add(Sort);
 
-        JRadioButton addedOldest = new JRadioButton("Added oldest");
+        ButtonGroup sortGroup = new ButtonGroup();
+
+        JCheckBoxMenuItem addedOldest = new JCheckBoxMenuItem("Added oldest");
+        sortGroup.add(addedOldest);
         Sort.add(addedOldest);
 
-        JRadioButton addedNewest = new JRadioButton("Added newest");
+        JCheckBoxMenuItem addedNewest = new JCheckBoxMenuItem("Added newest");
+        sortGroup.add(addedNewest);
         Sort.add(addedNewest);
+
         Sort.addSeparator();
 
-        JRadioButton nameAscending = new JRadioButton("Name ascending");
+        JCheckBoxMenuItem nameAscending = new JCheckBoxMenuItem("Name ascending");
+        sortGroup.add(nameAscending);
         Sort.add(nameAscending);
 
-        JRadioButton nameDescending = new JRadioButton("Name descending");
+        JCheckBoxMenuItem nameDescending = new JCheckBoxMenuItem("Name descending");
+        sortGroup.add(nameDescending);
         Sort.add(nameDescending);
+
         Sort.addSeparator();
 
-        JRadioButton priceChange = new JRadioButton("Price change(%)");
+        JCheckBoxMenuItem priceChange = new JCheckBoxMenuItem("Price change(%)");
+        sortGroup.add(priceChange);
         Sort.add(priceChange);
 
-        JRadioButton priceLow = new JRadioButton("Price low($)");
+        JCheckBoxMenuItem priceLow = new JCheckBoxMenuItem("Price low($)");
+        sortGroup.add(priceLow);
         Sort.add(priceLow);
 
-        JRadioButton priceHigh = new JRadioButton("Price high($)");
+        JCheckBoxMenuItem priceHigh = new JCheckBoxMenuItem("Price high($)");
+        sortGroup.add(priceHigh);
         Sort.add(priceHigh);
 
         /*
@@ -280,10 +298,10 @@ public class Main extends JFrame {
         return panel;
     }
 
-    private ImageIcon getIconImage(String filename){
+    private ImageIcon getIconImage(String fileName){
         try {
-            URL url = new URL(getClass().getResource("/image/"), filename);
-            return new ImageIcon(new ImageIcon(url).getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
+            URL url = new URL(getClass().getResource("/image/"), fileName);
+            return new ImageIcon(new ImageIcon(url).getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
         } catch (Exception e) {
             e.printStackTrace();
         }
