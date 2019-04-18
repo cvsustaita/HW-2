@@ -207,19 +207,19 @@ public class Main extends JFrame {
         JMenu selected = new JMenu("Selected");
         Item.add(selected);
 
-        JMenuItem price = new JMenuItem("Price");
+        JMenuItem price = new JMenuItem("Price", getIconImage("green check.png"));
         price.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.ALT_MASK));
         selected.add(price);
 
-        JMenuItem view = new JMenuItem("View");
+        JMenuItem view = new JMenuItem("View", getIconImage("green internet.png"));
         view.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, ActionEvent.ALT_MASK));
         selected.add(view);
 
-        JMenuItem edit = new JMenuItem("Edit");
+        JMenuItem edit = new JMenuItem("Edit", getIconImage("green edit.png"));
         edit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.ALT_MASK));
         selected.add(edit);
 
-        JMenuItem remove = new JMenuItem("Remove");
+        JMenuItem remove = new JMenuItem("Remove", getIconImage("green minus.png"));
         remove.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, ActionEvent.ALT_MASK));
         selected.add(remove);
         selected.addSeparator();
