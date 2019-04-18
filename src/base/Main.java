@@ -44,7 +44,7 @@ public class Main extends JFrame {
         super("Price Watcher");
         setSize(dim);
         configureUI();
-        //setLocationRelativeTo(null);
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
         //setResizable(false);
@@ -107,6 +107,20 @@ public class Main extends JFrame {
         System.exit(0);
     }
 
+    private void aboutClicked(ActionEvent event){
+        JFrame frame = new JFrame();
+        JDialog dialog = new JDialog(frame, "About");
+        JLabel version = new JLabel("Price Watcher Version 1.3", JLabel.CENTER);
+        JLabel authors = new JLabel("Erik Macik && Cynthia Sustaita", JLabel.CENTER);
+
+        dialog.setLocationRelativeTo(null);
+        dialog.add(version);
+        dialog.add(authors);
+        dialog.setSize(275, 145);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        dialog.setVisible(true);
+    }
+
     /** Configure UI. */
     private void configureUI() {
         setLayout(new BorderLayout());
@@ -142,6 +156,7 @@ public class Main extends JFrame {
         add(msgBar, BorderLayout.SOUTH);
     }
 
+
     /** Create a control panel consisting of a refresh button. */
     private JPanel makeControlPanel() {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEADING));
@@ -153,6 +168,7 @@ public class Main extends JFrame {
         JMenuItem about = new JMenuItem("About");
         App.add(about);
         App.addSeparator();
+        about.addActionListener(this::aboutClicked);
 
         JMenuItem exit = new JMenuItem("Exit");
         App.add(exit);
@@ -255,20 +271,7 @@ public class Main extends JFrame {
         sortGroup.add(priceHigh);
         Sort.add(priceHigh);
 
-        /*
-        birdButton.setActionCommand(birdString);
-        birdButton.setSelected(true);
-         birdButton.addActionListener(this);
-        */
-
-        /*JButton refreshButton = new JButton("Refresh");
-        refreshButton.setFocusPainted(false);
-        refreshButton.addActionListener(this::refreshButtonClicked);
-        panel.add(refreshButton);
-        */
-
         panel.add(menuBar);
-
         return panel;
     }
 
