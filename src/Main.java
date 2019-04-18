@@ -182,25 +182,25 @@ public class Main extends JFrame {
         JMenu Item = new JMenu("Item");
         menuBar.add(Item);
 
-        JMenuItem check = new JMenuItem("Check Prices");
+        JMenuItem check = new JMenuItem("Check Prices", getIconImage("blue check.png"));
         check.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.ALT_MASK));
         Item.add(check);
         check.addActionListener(this::refreshButtonClicked);
 
-        JMenuItem addItem = new JMenuItem("Add Item");
+        JMenuItem addItem = new JMenuItem("Add Item", getIconImage("blue plus.png"));
         addItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.ALT_MASK));
         Item.add(addItem);
         Item.addSeparator();
 
-        JMenuItem search = new JMenuItem("Search");
+        JMenuItem search = new JMenuItem("Search", getIconImage("blue search.png"));
         search.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.ALT_MASK));
         Item.add(search);
 
-        JMenuItem selectFirst = new JMenuItem("Select First");
+        JMenuItem selectFirst = new JMenuItem("Select First", getIconImage("blue up.png"));
         selectFirst.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, ActionEvent.ALT_MASK));
         Item.add(selectFirst);
 
-        JMenuItem selectLast = new JMenuItem("Select Last"); //new ImageIcon
+        JMenuItem selectLast = new JMenuItem("Select Last", getIconImage("blue down.png")); //new ImageIcon
         selectLast.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, ActionEvent.ALT_MASK));
         Item.add(selectLast);
         Item.addSeparator();
