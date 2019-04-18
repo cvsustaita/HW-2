@@ -44,11 +44,12 @@ public class Main extends JFrame {
         super("Price Watcher");
         setSize(dim);
         configureUI();
-        //setLocationRelativeTo(null);
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
-        //setResizable(false);
         showMessage("Welcome!");
+
+        pack();
     }
 
     /** Callback to be invoked when the refresh button is clicked.
@@ -62,10 +63,10 @@ public class Main extends JFrame {
         double percentIncrease = increase / oldPrice * 100;
 
         DecimalFormat df = new DecimalFormat("#.00");
-        String priceFormated = df.format(updatedPrice);
-        updatedPrice = Double.parseDouble(priceFormated);
-        priceFormated = df.format(percentIncrease);
-        percentIncrease = Double.parseDouble(priceFormated);
+        String priceFormatted = df.format(updatedPrice);
+        updatedPrice = Double.parseDouble(priceFormatted);
+        priceFormatted = df.format(percentIncrease);
+        percentIncrease = Double.parseDouble(priceFormatted);
         item.setRecentPrice(updatedPrice);
         item.setPriceChange(percentIncrease);
 
@@ -131,6 +132,9 @@ public class Main extends JFrame {
         item.setPriceChange(0);
         item.setDateAdded(item.getDateAdded());
 
+        itemList.addElement(item);
+        itemList.addElement(item);
+        itemList.addElement(item);
         itemList.addElement(item);
 
         jItemList.setCellRenderer(new ItemViewRenderer());
@@ -279,7 +283,6 @@ public class Main extends JFrame {
         JButton blueCheck = new JButton(getIconImage("blue check.png"));
         buttons.add(blueCheck);
         blueCheck.addActionListener(this::refreshButtonClicked);
-        //buttons.add(new JButton(getIconImage("blue check.png")));
         buttons.add(new JButton(getIconImage("blue plus.png")));
         buttons.add(new JButton(getIconImage("blue search.png")));
         buttons.add(new JButton(getIconImage("blue left.png")));
