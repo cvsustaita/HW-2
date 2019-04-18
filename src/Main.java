@@ -103,6 +103,8 @@ public class Main extends JFrame {
     }
 
     private void aboutClicked(ActionEvent event) {
+        JOptionPane.showMessageDialog(null, "Erik Macik && Cynthia Sustaita", "About", JOptionPane.PLAIN_MESSAGE);
+/*
         JPanel p = new JPanel();
         JFrame frame = new JFrame();
         JDialog dialog = new JDialog(frame, "About");
@@ -118,6 +120,7 @@ public class Main extends JFrame {
         dialog.setSize(275, 145);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         dialog.setVisible(true);
+        */
     }
 
     /** Configure UI. */
