@@ -74,7 +74,7 @@ public class Main extends JFrame {
 
     private void playSound(){
         try{
-            URL url = Main.class.getResource("chaching.au");
+            URL url = Main.class.getResource("/sound/chaching.au");
             Clip clip = AudioSystem.getClip();
             AudioInputStream ais = AudioSystem.getAudioInputStream(url);
             clip.open(ais);
@@ -119,6 +119,7 @@ public class Main extends JFrame {
 
     /** Configure UI. */
     private void configureUI() {
+        playSound();
         setLayout(new BorderLayout());
         JPanel control = new JPanel();
         control.setLayout(new BorderLayout());
