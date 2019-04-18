@@ -1,6 +1,3 @@
-package base;
-
-import edu.utep.cs.cs3331.pw.Item;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -78,7 +75,7 @@ public class ItemView extends JPanel {
 
         Font font = new Font("Arial", Font.BOLD, 12);
         g.setFont(font);
-        g.drawString(item.getName(), 45 + itemNameX, itemNameY);
+        g.drawString(item.getName(), 40 + itemNameX, itemNameY);
 
         g.setColor(Color.BLUE);
         String price = Double.toString(item.getRecentPrice());

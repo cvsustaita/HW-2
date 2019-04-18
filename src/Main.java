@@ -1,8 +1,3 @@
-package base;
-
-import edu.utep.cs.cs3331.pw.Item;
-import edu.utep.cs.cs3331.pw.PriceFinder;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;

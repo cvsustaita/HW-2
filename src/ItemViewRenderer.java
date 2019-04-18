@@ -1,7 +1,3 @@
-package base;
-
-import edu.utep.cs.cs3331.pw.Item;
-
 import javax.swing.*;
 import java.awt.*;
 
