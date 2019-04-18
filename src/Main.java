@@ -111,7 +111,6 @@ public class Main extends JFrame {
         JLabel authors = new JLabel("Erik Macik && Cynthia Sustaita", JLabel.CENTER);
         JButton ok = new JButton("OK");
         frame.add(p);
-
         p.add(version);
         p.add(authors);
         p.add(ok);
