@@ -103,15 +103,20 @@ public class Main extends JFrame {
         System.exit(0);
     }
 
-    private void aboutClicked(ActionEvent event){
+    private void aboutClicked(ActionEvent event) {
+        JPanel p = new JPanel();
         JFrame frame = new JFrame();
         JDialog dialog = new JDialog(frame, "About");
         JLabel version = new JLabel("Price Watcher Version 1.3", JLabel.CENTER);
         JLabel authors = new JLabel("Erik Macik && Cynthia Sustaita", JLabel.CENTER);
+        JButton ok = new JButton("OK");
+        frame.add(p);
 
+        p.add(version);
+        p.add(authors);
+        p.add(ok);
+        dialog.add(p);
         dialog.setLocationRelativeTo(null);
-        dialog.add(version);
-        dialog.add(authors);
         dialog.setSize(275, 145);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         dialog.setVisible(true);
@@ -125,7 +130,6 @@ public class Main extends JFrame {
         control.setLayout(new BorderLayout());
         control.add(makeControlPanel(), BorderLayout.NORTH);
         control.add(makeButtonPanel(), BorderLayout.CENTER);
-        //control.setBorder(BorderFactory.createEmptyBorder(10,16,0,16));
         add(control, BorderLayout.NORTH);
 
         JPanel board = new JPanel();
