@@ -43,7 +43,6 @@ public class Main extends JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
         showMessage("Welcome!");
-
         pack();
     }
 
@@ -291,14 +290,14 @@ public class Main extends JFrame {
 
         buttons.addSeparator();
 
-        buttons.add(new JButton(getIconImage("websiteIcon.png")));
-        buttons.add(new JButton(getIconImage("websiteIcon.png")));
-        buttons.add(new JButton(getIconImage("websiteIcon.png")));
-        buttons.add(new JButton(getIconImage("websiteIcon.png")));
+        buttons.add(new JButton(getIconImage("green check.png")));
+        buttons.add(new JButton(getIconImage("green internet.png")));
+        buttons.add(new JButton(getIconImage("green edit.png")));
+        buttons.add(new JButton(getIconImage("green minus.png")));
 
         buttons.addSeparator();
 
-        buttons.add(new JButton(getIconImage("websiteIcon.png")));
+        buttons.add(new JButton(getIconImage("blue info.png")));
 
         panel.add(buttons);
         return panel;
