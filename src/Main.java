@@ -24,7 +24,7 @@ public class Main extends JFrame {
     private final static Dimension DEFAULT_SIZE = new Dimension(400, 300);
 
     /** Special panel to display the watched item. */
-    private ItemViewRenderer itemRenderer;
+    private ItemViewRenderer itemRenderer = new ItemViewRenderer();
 
     /** Message bar to display various messages. */
     private JLabel msgBar = new JLabel(" ");
@@ -124,7 +124,6 @@ public class Main extends JFrame {
 
     /** Configure UI. */
     private void configureUI() {
-        playSound();
         setLayout(new BorderLayout());
         JPanel control = new JPanel();
         control.setLayout(new BorderLayout());
@@ -151,9 +150,9 @@ public class Main extends JFrame {
         itemList.addElement(item);
         itemList.addElement(item);
 
-        jItemList.setCellRenderer(new ItemViewRenderer());
-
         //itemRenderer.setClickListener(this::viewPageClicked);
+        jItemList.setCellRenderer(itemRenderer);
+
         board.add(new JScrollPane(jItemList));
         add(board, BorderLayout.CENTER);
         msgBar.setBorder(BorderFactory.createEmptyBorder(10,16,10,0));
@@ -288,8 +287,8 @@ public class Main extends JFrame {
         blueCheck.addActionListener(this::refreshButtonClicked);
         buttons.add(new JButton(getIconImage("blue plus.png")));
         buttons.add(new JButton(getIconImage("blue search.png")));
-        buttons.add(new JButton(getIconImage("blue left.png")));
-        buttons.add(new JButton(getIconImage("blue right.png")));
+        buttons.add(new JButton(getIconImage("blue up.png")));
+        buttons.add(new JButton(getIconImage("blue down.png")));
 
         buttons.addSeparator();
 
@@ -309,7 +308,7 @@ public class Main extends JFrame {
     private ImageIcon getIconImage(String fileName){
         try {
             URL url = new URL(getClass().getResource("/image/"), fileName);
-            return new ImageIcon(new ImageIcon(url).getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
+            return new ImageIcon(new ImageIcon(url).getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
         } catch (Exception e) {
             e.printStackTrace();
         }
