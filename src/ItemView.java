@@ -50,10 +50,10 @@ public class ItemView extends JPanel {
         super.paintComponent(g);
         int x = 20, y = 30;
 
-        Image image = getImage("websiteIcon.png");
+        Image image = item.getWebsiteImage();
         Font italics = new Font("Arial", Font.ITALIC, 12);
         g.setFont(italics);
-        g.drawImage(image, x,x-5, x+x, x+x-5, 0, 0, image.getWidth(null), image.getHeight(null), null);
+        g.drawImage(item.getWebsiteImage(), x,x-5, x+x, x+x-5, 0, 0, image.getWidth(null), image.getHeight(null), null);
         y += 20;
 //        g.drawString("Hi, I am your item!", x, y);
 //        y += 20;
@@ -97,14 +97,5 @@ public class ItemView extends JPanel {
         return new Rectangle(20, 20, 30, 20).contains(x,  y);
     }
 
-    /** Return the image stored in the given file. */
-    public Image getImage(String file) {
-        try {
-            URL url = new URL(getClass().getResource(IMAGE_DIR), file);
-            return ImageIO.read(url);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+
 }

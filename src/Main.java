@@ -1,9 +1,11 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
 import java.text.DecimalFormat;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.sound.sampled.*;
 
@@ -135,18 +137,27 @@ public class Main extends JFrame {
                 BorderFactory.createLineBorder(Color.GRAY)));
         board.setLayout(new GridLayout(1,1));
 
-        Item item = new Item();
-        item.setName("LED Monitor");
-        item.setURL("https://www.bestbuy.com/site/samsung-ue590-series-28-led-4k-uhd-monitor-black/5484022.p?skuId=5484022");
-        item.setInitialPrice(370.0);
-        item.setRecentPrice(370.0);
-        item.setPriceChange(0);
-        item.setDateAdded(item.getDateAdded());
+        Item ledMonitor = new Item();
+        ledMonitor.setName("LED Monitor");
+        ledMonitor.setWebsiteImage("best buy.png");
+        ledMonitor.setURL("https://www.bestbuy.com/site/samsung-ue590-series-28-led-4k-uhd-monitor-black/5484022.p?skuId=5484022");
+        ledMonitor.setInitialPrice(370.0);
+        ledMonitor.setRecentPrice(370.0);
+        ledMonitor.setPriceChange(0);
+        ledMonitor.setDateAdded(ledMonitor.getDateAdded());
 
-        itemList.addElement(item);
-        itemList.addElement(item);
-        itemList.addElement(item);
-        itemList.addElement(item);
+        itemList.addElement(ledMonitor);
+
+        Item airPods = new Item();
+        airPods.setName("AirPods");
+        airPods.setWebsiteImage("apple.png");
+        airPods.setURL("https://www.apple.com/shop/product/MRXJ2/airpods-with-wireless-charging-case");
+        airPods.setInitialPrice(199.0);
+        airPods.setRecentPrice(199.0);
+        airPods.setPriceChange(0);
+        airPods.setDateAdded(airPods.getDateAdded());
+
+        itemList.addElement(airPods);
 
         //itemRenderer.setClickListener(this::viewPageClicked);
         jItemList.setCellRenderer(itemRenderer);

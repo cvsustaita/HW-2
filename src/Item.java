@@ -1,3 +1,7 @@
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.io.IOException;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -9,6 +13,7 @@ public class Item {
     private double initialPrice;
     private double recentPrice;
     private double priceChange;
+    private Image websiteImage;
 
     public Item(){}
 
@@ -69,5 +74,18 @@ public class Item {
 
     public void setRecentPrice(double recentPrice) {
         this.recentPrice = recentPrice;
+    }
+
+    public Image getWebsiteImage() {
+        return websiteImage;
+    }
+
+    public void setWebsiteImage(String file) {
+        try {
+            java.net.URL url = new URL(getClass().getResource("/image/"), file);
+            websiteImage = ImageIO.read(url);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
