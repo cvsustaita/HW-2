@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -55,8 +56,6 @@ public class ItemView extends JPanel {
         g.setFont(italics);
         g.drawImage(item.getWebsiteImage(), x,x-5, x+x, x+x-5, 0, 0, image.getWidth(null), image.getHeight(null), null);
         y += 20;
-//        g.drawString("Hi, I am your item!", x, y);
-//        y += 20;
         g.drawString("Name: ", x, y);
         int itemNameX = x;
         int itemNameY = y;
@@ -64,11 +63,9 @@ public class ItemView extends JPanel {
         g.drawString("URL: " + item.getURL(), x, y);
         y += 20;
         g.drawString("Price:$", x, y);
-        int itemPriceX = x;
         int itemPriceY = y;
         y += 20;
         g.drawString("Change: %", x, y);
-        int itemChangeX = x;
         int itemChangeY = y;
         y += 20;
         g.drawString("Added: " + item.getDateAdded() + " $" + item.getInitialPrice(), x, y);

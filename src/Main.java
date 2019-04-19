@@ -15,7 +15,6 @@ import javax.sound.sampled.*;
 @SuppressWarnings("serial")
 public class Main extends JFrame {
 
-    private Item item = new Item();
     private DefaultListModel<Item> itemList = new DefaultListModel<>();
     private JList<Item> jItemList = new JList<>(itemList);
     private PriceFinder priceFinder = new PriceFinder();
@@ -51,6 +50,9 @@ public class Main extends JFrame {
      * along with a percentage price change. */
     private void refreshButtonClicked(ActionEvent event) {
 
+        Item item = jItemList.getSelectedValue();
+        if (item == null) return;
+
         double oldPrice = item.getInitialPrice();
         double updatedPrice = priceFinder.getRandomPrice();
         double increase = updatedPrice - oldPrice;
@@ -68,7 +70,7 @@ public class Main extends JFrame {
             playSound();
 
         super.repaint();
-        showMessage("Updated item price: " + item.getRecentPrice());
+        showMessage("Updated item price: $" + item.getRecentPrice());
     }
 
     private void playSound(){
@@ -86,7 +88,10 @@ public class Main extends JFrame {
     /** Callback to be invoked when the view-page icon is clicked.
      * Launch a (default) web browser by supplying the URL of
      * the item. */
-    private void viewPageClicked() {
+    private void openWebsite(ActionEvent event) {
+        Item item = jItemList.getSelectedValue();
+        if (item == null) return;
+
         System.out.println("Web page displaying in your browser");
         try {
             Desktop desktop = Desktop.getDesktop();
@@ -104,23 +109,27 @@ public class Main extends JFrame {
 
     private void aboutClicked(ActionEvent event) {
         JOptionPane.showMessageDialog(null, "Erik Macik && Cynthia Sustaita", "About", JOptionPane.PLAIN_MESSAGE);
-/*
-        JPanel p = new JPanel();
-        JFrame frame = new JFrame();
-        JDialog dialog = new JDialog(frame, "About");
-        JLabel version = new JLabel("Price Watcher Version 1.3", JLabel.CENTER);
-        JLabel authors = new JLabel("Erik Macik && Cynthia Sustaita", JLabel.CENTER);
-        JButton ok = new JButton("OK");
-        frame.add(p);
-        p.add(version);
-        p.add(authors);
-        p.add(ok);
-        dialog.add(p);
-        dialog.setLocationRelativeTo(null);
-        dialog.setSize(275, 145);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        dialog.setVisible(true);
-        */
+    }
+
+    private void deleteClicked(ActionEvent event) {
+        int selected = JOptionPane.showConfirmDialog(null, "Do you really want to remove this item?", "Remove", JOptionPane.YES_NO_OPTION);
+        System.out.println(selected);
+
+        if (selected == JOptionPane.YES_OPTION)
+            itemList.remove(jItemList.getSelectedIndex());
+    }
+
+    private void addClicked(ActionEvent event){
+
+    }
+
+    private void refreshAllclicked(ActionEvent event){
+        int originalSelection = jItemList.getSelectedIndex();
+        for (int i = 0; i < itemList.getSize(); i++){
+            jItemList.setSelectedIndex(i);
+            refreshButtonClicked(null);
+        }
+        jItemList.setSelectedIndex(originalSelection);
     }
 
     /** Configure UI. */
@@ -160,7 +169,6 @@ public class Main extends JFrame {
 
         itemList.addElement(airPods);
 
-        //itemRenderer.setClickListener(this::viewPageClicked);
         jItemList.setCellRenderer(itemRenderer);
 
         board.add(new JScrollPane(jItemList));
@@ -196,11 +204,11 @@ public class Main extends JFrame {
         JMenuItem check = new JMenuItem("Check Prices", getIconImage("blue check.png"));
         check.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.ALT_MASK));
         Item.add(check);
-        check.addActionListener(this::refreshButtonClicked);
 
         JMenuItem addItem = new JMenuItem("Add Item", getIconImage("blue plus.png"));
         addItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.ALT_MASK));
         Item.add(addItem);
+
         Item.addSeparator();
 
         JMenuItem search = new JMenuItem("Search", getIconImage("blue search.png"));
@@ -220,10 +228,12 @@ public class Main extends JFrame {
         Item.add(selected);
 
         JMenuItem price = new JMenuItem("Price", getIconImage("green check.png"));
+        price.addActionListener(this::refreshButtonClicked);
         price.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.ALT_MASK));
         selected.add(price);
 
         JMenuItem view = new JMenuItem("View", getIconImage("green internet.png"));
+        view.addActionListener(this::openWebsite);
         view.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, ActionEvent.ALT_MASK));
         selected.add(view);
 
@@ -233,7 +243,9 @@ public class Main extends JFrame {
 
         JMenuItem remove = new JMenuItem("Remove", getIconImage("green minus.png"));
         remove.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, ActionEvent.ALT_MASK));
+        remove.addActionListener(this::deleteClicked);
         selected.add(remove);
+
         selected.addSeparator();
 
         JMenuItem copyName = new JMenuItem("Copy name");
@@ -293,8 +305,8 @@ public class Main extends JFrame {
         JToolBar buttons = new JToolBar();
 
         JButton blueCheck = new JButton(getIconImage("blue check.png"));
+        blueCheck.addActionListener(this::refreshAllclicked);
         buttons.add(blueCheck);
-        blueCheck.addActionListener(this::refreshButtonClicked);
         buttons.add(new JButton(getIconImage("blue plus.png")));
         buttons.add(new JButton(getIconImage("blue search.png")));
         buttons.add(new JButton(getIconImage("blue up.png")));
@@ -302,14 +314,27 @@ public class Main extends JFrame {
 
         buttons.addSeparator();
 
-        buttons.add(new JButton(getIconImage("green check.png")));
-        buttons.add(new JButton(getIconImage("green internet.png")));
-        buttons.add(new JButton(getIconImage("green edit.png")));
-        buttons.add(new JButton(getIconImage("green minus.png")));
+        JButton greenCheck = new JButton(getIconImage("green check.png"));
+        greenCheck.addActionListener(this::refreshButtonClicked);
+        buttons.add(greenCheck);
+
+        JButton greenInternet = new JButton(getIconImage("green internet.png"));
+        greenInternet.addActionListener(this::openWebsite);
+        buttons.add(greenInternet);
+
+        JButton greenEdit = new JButton(getIconImage("green edit.png"));
+        greenEdit.addActionListener(this::addClicked);
+        buttons.add(greenEdit);
+
+        JButton greenMinus = new JButton(getIconImage("green minus.png"));
+        greenMinus.addActionListener(this::deleteClicked);
+        buttons.add(greenMinus);
 
         buttons.addSeparator();
 
-        buttons.add(new JButton(getIconImage("blue info.png")));
+        JButton blueInfo = new JButton(getIconImage("blue info.png"));
+        blueInfo.addActionListener(this::aboutClicked);
+        buttons.add(blueInfo);
 
         panel.add(buttons);
         return panel;
