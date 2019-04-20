@@ -131,7 +131,11 @@ public class Main extends JFrame {
             itemList.remove(jItemList.getSelectedIndex());
     }
 
-    private void addClicked(ActionEvent event){
+    private void editClicked(ActionEvent event){
+        JOptionPane.showMessageDialog(null, new EditDialog());
+    }
+
+    private void addItemClicked(ActionEvent event){
         JOptionPane.showMessageDialog(null, new EditDialog());
     }
 
@@ -324,6 +328,7 @@ public class Main extends JFrame {
         buttons.add(blueCheck);
 
         JButton bluePlus = new JButton(getIconImage("blue plus.png"));
+        bluePlus.addActionListener(this::addItemClicked);
         buttons.add(bluePlus);
 
         buttons.add(new JButton(getIconImage("blue search.png")));
@@ -347,7 +352,7 @@ public class Main extends JFrame {
         buttons.add(greenInternet);
 
         JButton greenEdit = new JButton(getIconImage("green edit.png"));
-        greenEdit.addActionListener(this::addClicked);
+        greenEdit.addActionListener(this::editClicked);
         buttons.add(greenEdit);
 
         JButton greenMinus = new JButton(getIconImage("green minus.png"));
