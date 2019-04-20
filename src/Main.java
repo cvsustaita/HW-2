@@ -140,12 +140,11 @@ public class Main extends JFrame {
     }
 
     private void refreshAllClicked(ActionEvent event){
-        int originalSelection = jItemList.getSelectedIndex();
         for (int i = 0; i < itemList.getSize(); i++){
             jItemList.setSelectedIndex(i);
             refreshButtonClicked(null);
         }
-        jItemList.setSelectedIndex(originalSelection);
+        jItemList.clearSelection();
     }
 
     /** Configure UI. */
@@ -218,6 +217,7 @@ public class Main extends JFrame {
         menuBar.add(Item);
 
         JMenuItem check = new JMenuItem("Check Prices", getIconImage("blue check.png"));
+        check.addActionListener(this::refreshAllClicked);
         check.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.ALT_MASK));
         Item.add(check);
 
