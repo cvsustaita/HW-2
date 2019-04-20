@@ -108,7 +108,7 @@ public class Main extends JFrame {
     }
 
     private void aboutClicked(ActionEvent event) {
-        JOptionPane.showMessageDialog(null, "Erik Macik && Cynthia Sustaita", "About", JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Erik Macik && Cynthia Sustaita", "About", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void deleteClicked(ActionEvent event) {
@@ -120,10 +120,10 @@ public class Main extends JFrame {
     }
 
     private void addClicked(ActionEvent event){
-
+        JOptionPane.showMessageDialog(null, new EditDialog());
     }
 
-    private void refreshAllclicked(ActionEvent event){
+    private void refreshAllClicked(ActionEvent event){
         int originalSelection = jItemList.getSelectedIndex();
         for (int i = 0; i < itemList.getSize(); i++){
             jItemList.setSelectedIndex(i);
@@ -305,7 +305,7 @@ public class Main extends JFrame {
         JToolBar buttons = new JToolBar();
 
         JButton blueCheck = new JButton(getIconImage("blue check.png"));
-        blueCheck.addActionListener(this::refreshAllclicked);
+        blueCheck.addActionListener(this::refreshAllClicked);
         buttons.add(blueCheck);
         buttons.add(new JButton(getIconImage("blue plus.png")));
         buttons.add(new JButton(getIconImage("blue search.png")));
