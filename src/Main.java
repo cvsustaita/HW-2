@@ -103,6 +103,18 @@ public class Main extends JFrame {
         showMessage("View clicked!");
     }
 
+    private void upClicked(ActionEvent event){
+        int newSelected = jItemList.getSelectedIndex() -1;
+        if (newSelected < 0)
+            jItemList.setSelectedIndex(itemList.getSize() - 1);
+        else
+            jItemList.setSelectedIndex(newSelected);
+    }
+
+    private void downClicked(ActionEvent event){
+        jItemList.setSelectedIndex((jItemList.getSelectedIndex()+1) % itemList.getSize());
+    }
+
     private void exitClicked(ActionEvent event){
         System.exit(0);
     }
@@ -215,13 +227,16 @@ public class Main extends JFrame {
         search.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.ALT_MASK));
         Item.add(search);
 
-        JMenuItem selectFirst = new JMenuItem("Select First", getIconImage("blue up.png"));
-        selectFirst.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, ActionEvent.ALT_MASK));
-        Item.add(selectFirst);
+        JMenuItem selectPrevious = new JMenuItem("Select Previous", getIconImage("blue up.png"));
+        selectPrevious.addActionListener(this::upClicked);
+        selectPrevious.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, ActionEvent.ALT_MASK));
+        Item.add(selectPrevious);
 
-        JMenuItem selectLast = new JMenuItem("Select Last", getIconImage("blue down.png")); //new ImageIcon
-        selectLast.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, ActionEvent.ALT_MASK));
-        Item.add(selectLast);
+        JMenuItem selectNext = new JMenuItem("Select Next", getIconImage("blue down.png")); //new ImageIcon
+        selectNext.addActionListener(this::downClicked);
+        selectNext.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, ActionEvent.ALT_MASK));
+        Item.add(selectNext);
+
         Item.addSeparator();
 
         JMenu selected = new JMenu("Selected");
@@ -307,10 +322,19 @@ public class Main extends JFrame {
         JButton blueCheck = new JButton(getIconImage("blue check.png"));
         blueCheck.addActionListener(this::refreshAllClicked);
         buttons.add(blueCheck);
-        buttons.add(new JButton(getIconImage("blue plus.png")));
+
+        JButton bluePlus = new JButton(getIconImage("blue plus.png"));
+        buttons.add(bluePlus);
+
         buttons.add(new JButton(getIconImage("blue search.png")));
-        buttons.add(new JButton(getIconImage("blue up.png")));
-        buttons.add(new JButton(getIconImage("blue down.png")));
+
+        JButton blueUp = new JButton(getIconImage("blue up.png"));
+        blueUp.addActionListener(this::upClicked);
+        buttons.add(blueUp);
+
+        JButton blueDown = new JButton(getIconImage("blue down.png"));
+        blueDown.addActionListener(this::downClicked);
+        buttons.add(blueDown);
 
         buttons.addSeparator();
 
