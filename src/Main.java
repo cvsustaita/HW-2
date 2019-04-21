@@ -247,26 +247,31 @@ public class Main extends JFrame {
         JMenuItem check = new JMenuItem("Check Prices", getIconImage("blue check.png"));
         check.addActionListener(this::refreshAllClicked);
         check.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.ALT_MASK));
+        check.setMnemonic(KeyEvent.VK_C);
         Item.add(check);
 
         JMenuItem addItem = new JMenuItem("Add Item", getIconImage("blue plus.png"));
         addItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.ALT_MASK));
+        addItem.setMnemonic(KeyEvent.VK_A);
         Item.add(addItem);
 
         Item.addSeparator();
 
         JMenuItem search = new JMenuItem("Search", getIconImage("blue search.png"));
         search.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.ALT_MASK));
+        search.setMnemonic(KeyEvent.VK_S);
         Item.add(search);
 
         JMenuItem selectPrevious = new JMenuItem("Select Previous", getIconImage("blue up.png"));
         selectPrevious.addActionListener(this::upClicked);
-        selectPrevious.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, ActionEvent.ALT_MASK));
+        selectPrevious.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U, ActionEvent.ALT_MASK));
+        selectPrevious.setMnemonic(KeyEvent.VK_U);
         Item.add(selectPrevious);
 
         JMenuItem selectNext = new JMenuItem("Select Next", getIconImage("blue down.png")); //new ImageIcon
         selectNext.addActionListener(this::downClicked);
-        selectNext.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, ActionEvent.ALT_MASK));
+        selectNext.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.ALT_MASK));
+        selectNext.setMnemonic(KeyEvent.VK_N);
         Item.add(selectNext);
 
         Item.addSeparator();
@@ -277,19 +282,23 @@ public class Main extends JFrame {
         JMenuItem price = new JMenuItem("Price", getIconImage("green check.png"));
         price.addActionListener(this::refreshButtonClicked);
         price.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.ALT_MASK));
+        price.setMnemonic(KeyEvent.VK_P);
         selected.add(price);
 
         JMenuItem view = new JMenuItem("View", getIconImage("green internet.png"));
         view.addActionListener(this::openWebsite);
         view.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, ActionEvent.ALT_MASK));
+        view.setMnemonic(KeyEvent.VK_V);
         selected.add(view);
 
         JMenuItem edit = new JMenuItem("Edit", getIconImage("green edit.png"));
         edit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.ALT_MASK));
+        edit.setMnemonic(KeyEvent.VK_E);
         selected.add(edit);
 
         JMenuItem remove = new JMenuItem("Remove", getIconImage("green minus.png"));
         remove.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, ActionEvent.ALT_MASK));
+        remove.setMnemonic(KeyEvent.VK_R);
         remove.addActionListener(this::deleteClicked);
         selected.add(remove);
 
