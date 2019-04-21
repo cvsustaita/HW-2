@@ -1,6 +1,5 @@
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.net.URI;
 import java.net.URL;
 import java.text.DecimalFormat;
@@ -13,7 +12,7 @@ import javax.sound.sampled.*;
  * @author Yoonsik Cheon
  */
 @SuppressWarnings("serial")
-public class Main extends JFrame {
+public class Main extends JFrame{
 
     private DefaultListModel<Item> itemList = new DefaultListModel<>();
     private JList<Item> jItemList = new JList<>(itemList);
@@ -214,6 +213,8 @@ public class Main extends JFrame {
 
         jItemList.setCellRenderer(itemRenderer);
 
+        jItemList.addMouseListener(new ListMouseListener());
+
         board.add(new JScrollPane(jItemList));
         add(board, BorderLayout.CENTER);
         msgBar.setBorder(BorderFactory.createEmptyBorder(10,16,10,0));
@@ -281,7 +282,7 @@ public class Main extends JFrame {
 
         JMenuItem price = new JMenuItem("Price", getIconImage("green check.png"));
         price.addActionListener(this::refreshButtonClicked);
-        price.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.ALT_MASK));
+        price.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.ALT_MASK));
         price.setMnemonic(KeyEvent.VK_P);
         selected.add(price);
 
