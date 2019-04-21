@@ -160,7 +160,7 @@ public class Main extends JFrame {
                 showMessage("Please re-enter correct information.");
             }
         }
-        JOptionPane.showMessageDialog(null, new EditDialog());
+        //JOptionPane.showMessageDialog(null, new EditDialog());
     }
 
     private void refreshAllClicked(ActionEvent event){
