@@ -25,5 +25,32 @@ public class EditDialog extends JPanel {
         add(priceField);
     }
 
+    @Override
+    public void doLayout() {
+        nameLabel.setBounds(10, 10, 60, 30);
+        nameField.setBounds(70, 15, 270, 20);
 
+        urlLabel.setBounds(10, 40, 60, 30);
+        urlField.setBounds(70, 45, 270, 20);
+
+        priceLabel.setBounds(10, 70, 60, 30);
+        priceField.setBounds(70, 75, 270, 20);
+    }
+
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(300, 100);
+    }
+
+    @Override
+    public Dimension getMinimumSize() {
+        return new Dimension(300, 100);
+    }
+
+    public void reset(){
+        nameField.setText("");
+        urlField.setText("");
+        priceField.setText("");
+    }
 }
+

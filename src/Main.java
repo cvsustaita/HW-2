@@ -131,7 +131,35 @@ public class Main extends JFrame {
             itemList.remove(jItemList.getSelectedIndex());
     }
 
-    private void addClicked(ActionEvent event){
+    private void editClicked(ActionEvent event){
+        JOptionPane.showMessageDialog(null, new EditDialog());
+    }
+
+    private void addItemClicked(ActionEvent event){
+        JTextField name = new JTextField();
+        JTextField url = new JTextField();
+        JTextField price = new JTextField();
+        Object[] message = {
+                "Product Name:", name,
+                "Product URL:", url,
+                "Product Price:", price
+        };
+
+        int option = JOptionPane.showConfirmDialog(this, message, "Add", JOptionPane.OK_CANCEL_OPTION, 0);
+        //OK
+        if (option == 0) {
+            try {
+                Item newItem = new Item();
+                newItem.setName(name.getText());
+                newItem.setInitialPrice(Double.parseDouble(price.getText()));
+                newItem.setURL(url.getText());
+                newItem.setDateAdded(newItem.getDateAdded());
+                itemList.addElement(newItem);
+                showMessage("Product Successfully Added");
+            } catch (NumberFormatException e) {
+                showMessage("Please re-enter correct information.");
+            }
+        }
         JOptionPane.showMessageDialog(null, new EditDialog());
     }
 
@@ -324,6 +352,7 @@ public class Main extends JFrame {
         buttons.add(blueCheck);
 
         JButton bluePlus = new JButton(getIconImage("blue plus.png"));
+        bluePlus.addActionListener(this::addItemClicked);
         buttons.add(bluePlus);
 
         buttons.add(new JButton(getIconImage("blue search.png")));
@@ -347,7 +376,7 @@ public class Main extends JFrame {
         buttons.add(greenInternet);
 
         JButton greenEdit = new JButton(getIconImage("green edit.png"));
-        greenEdit.addActionListener(this::addClicked);
+        greenEdit.addActionListener(this::editClicked);
         buttons.add(greenEdit);
 
         JButton greenMinus = new JButton(getIconImage("green minus.png"));
