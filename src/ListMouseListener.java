@@ -12,19 +12,19 @@ class ListMouseListener extends MouseAdapter {
         this.main = main;
 
         JMenuItem checkPrice = new JMenuItem("Check price");
-        checkPrice.addActionListener(this::cancelDialog);
+        checkPrice.addActionListener(this::cancelPopup);
         checkPrice.addActionListener(main::refreshButtonClicked);
 
         JMenuItem openWebpage = new JMenuItem("Open webpage");
-        openWebpage.addActionListener(this::cancelDialog);
+        openWebpage.addActionListener(this::cancelPopup);
         openWebpage.addActionListener(main::openWebsite);
 
         JMenuItem editItem = new JMenuItem("Edit item");
-        editItem.addActionListener(this::cancelDialog);
+        editItem.addActionListener(this::cancelPopup);
         editItem.addActionListener(main::editClicked);
 
         JMenuItem removeItem = new JMenuItem("Remove Item");
-        removeItem.addActionListener(this::cancelDialog);
+        removeItem.addActionListener(this::cancelPopup);
         removeItem.addActionListener(main::deleteClicked);
 
         popupMenu.removeAll();
@@ -51,7 +51,7 @@ class ListMouseListener extends MouseAdapter {
         }
     }
 
-    void cancelDialog(ActionEvent event){
+    void cancelPopup(ActionEvent event){
         popupMenu.setVisible(false);
     }
 }

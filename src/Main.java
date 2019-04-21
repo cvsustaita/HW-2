@@ -176,7 +176,7 @@ public class Main extends JFrame{
                 Item newItem = new Item();
                 newItem.setName(name.getText());
 
-                newItem.setWebsiteImage("apple.png");
+                newItem.setWebsiteImage("missing image.png");
                 newItem.setURL(url.getText());
                 newItem.setInitialPrice(Double.parseDouble(price.getText()));
                 newItem.setRecentPrice(Double.parseDouble(price.getText()));
@@ -197,6 +197,7 @@ public class Main extends JFrame{
             refreshButtonClicked(null);
         }
         jItemList.clearSelection();
+        showMessage("All item prices updated");
     }
 
     /** Configure UI. */
