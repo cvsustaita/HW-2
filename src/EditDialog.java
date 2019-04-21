@@ -24,4 +24,6 @@ public class EditDialog extends JPanel {
         add(priceLabel);
         add(priceField);
     }
+
+
 }

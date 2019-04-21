@@ -3,7 +3,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.net.URI;
 import java.net.URL;
-import java.security.Key;
 import java.text.DecimalFormat;
 import javax.swing.*;
 import javax.sound.sampled.*;
@@ -46,34 +45,32 @@ public class Main extends JFrame {
         pack();
     }
 
-    private void refreshItem(Item item){
-        if (item != null) {
-            double oldPrice = item.getInitialPrice();
-            double updatedPrice = priceFinder.getRandomPrice();
-            double increase = updatedPrice - oldPrice;
-            double percentIncrease = increase / oldPrice * 100;
-
-            DecimalFormat df = new DecimalFormat("#.00");
-            String priceFormatted = df.format(updatedPrice);
-            updatedPrice = Double.parseDouble(priceFormatted);
-            priceFormatted = df.format(percentIncrease);
-            percentIncrease = Double.parseDouble(priceFormatted);
-            item.setRecentPrice(updatedPrice);
-            item.setPriceChange(percentIncrease);
-
-            if (item.getPriceChange() < 0)
-                playSound();
-
-            super.repaint();
-            showMessage("Updated item price: $" + item.getRecentPrice());
-        }
-    }
-
     /** Callback to be invoked when the refresh button is clicked.
      * Find the current price of the watched item and display it
      * along with a percentage price change. */
     private void refreshButtonClicked(ActionEvent event) {
-        refreshItem(jItemList.getSelectedValue());
+
+        Item item = jItemList.getSelectedValue();
+        if (item == null) return;
+
+        double oldPrice = item.getInitialPrice();
+        double updatedPrice = priceFinder.getRandomPrice();
+        double increase = updatedPrice - oldPrice;
+        double percentIncrease = increase / oldPrice * 100;
+
+        DecimalFormat df = new DecimalFormat("#.00");
+        String priceFormatted = df.format(updatedPrice);
+        updatedPrice = Double.parseDouble(priceFormatted);
+        priceFormatted = df.format(percentIncrease);
+        percentIncrease = Double.parseDouble(priceFormatted);
+        item.setRecentPrice(updatedPrice);
+        item.setPriceChange(percentIncrease);
+
+        if (item.getPriceChange() < 0)
+            playSound();
+
+        super.repaint();
+        showMessage("Updated item price: $" + item.getRecentPrice());
     }
 
     private void playSound(){
@@ -127,31 +124,21 @@ public class Main extends JFrame {
     }
 
     private void deleteClicked(ActionEvent event) {
-        if (jItemList.getSelectedValue() != null) {
-            int selected = JOptionPane.showConfirmDialog(null, "Do you really want to remove this item?", "Remove", JOptionPane.YES_NO_OPTION);
-            System.out.println(selected);
+        int selected = JOptionPane.showConfirmDialog(null, "Do you really want to remove this item?", "Remove", JOptionPane.YES_NO_OPTION);
+        System.out.println(selected);
 
-            if (selected == JOptionPane.YES_OPTION)
-                itemList.remove(jItemList.getSelectedIndex());
-        }
+        if (selected == JOptionPane.YES_OPTION)
+            itemList.remove(jItemList.getSelectedIndex());
     }
 
     private void addClicked(ActionEvent event){
-        Item selectedItem = jItemList.getSelectedValue();
         JOptionPane.showMessageDialog(null, new EditDialog());
-    }
-
-    private void editClicked(ActionEvent event){
-        Item selectedItem = jItemList.getSelectedValue();
-        if (selectedItem != null){
-            JOptionPane.showMessageDialog(null, new EditDialog());
-        }
     }
 
     private void refreshAllClicked(ActionEvent event){
         for (int i = 0; i < itemList.getSize(); i++){
             jItemList.setSelectedIndex(i);
-            refreshItem(jItemList.getSelectedValue());
+            refreshButtonClicked(null);
         }
         jItemList.clearSelection();
     }
@@ -211,9 +198,9 @@ public class Main extends JFrame {
         menuBar.add(App);
 
         JMenuItem about = new JMenuItem("About", getIconImage("blue info.png"));
-        about.addActionListener(this::aboutClicked);
         App.add(about);
         App.addSeparator();
+        about.addActionListener(this::aboutClicked);
 
         JMenuItem exit = new JMenuItem("Exit", getIconImage("blue power.png"));
         App.add(exit);
@@ -228,32 +215,26 @@ public class Main extends JFrame {
         JMenuItem check = new JMenuItem("Check Prices", getIconImage("blue check.png"));
         check.addActionListener(this::refreshAllClicked);
         check.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.ALT_MASK));
-        check.setMnemonic(KeyEvent.VK_C);
         Item.add(check);
 
         JMenuItem addItem = new JMenuItem("Add Item", getIconImage("blue plus.png"));
-        addItem.addActionListener(this::addClicked);
         addItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.ALT_MASK));
-        addItem.setMnemonic(KeyEvent.VK_A);
         Item.add(addItem);
 
         Item.addSeparator();
 
         JMenuItem search = new JMenuItem("Search", getIconImage("blue search.png"));
         search.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.ALT_MASK));
-        search.setMnemonic(KeyEvent.VK_S);
         Item.add(search);
 
         JMenuItem selectPrevious = new JMenuItem("Select Previous", getIconImage("blue up.png"));
         selectPrevious.addActionListener(this::upClicked);
-        selectPrevious.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U, ActionEvent.ALT_MASK));
-        selectPrevious.setMnemonic(KeyEvent.VK_U);
+        selectPrevious.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, ActionEvent.ALT_MASK));
         Item.add(selectPrevious);
 
         JMenuItem selectNext = new JMenuItem("Select Next", getIconImage("blue down.png")); //new ImageIcon
         selectNext.addActionListener(this::downClicked);
-        selectNext.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.ALT_MASK));
-        selectNext.setMnemonic(KeyEvent.VK_N);
+        selectNext.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, ActionEvent.ALT_MASK));
         Item.add(selectNext);
 
         Item.addSeparator();
@@ -264,24 +245,19 @@ public class Main extends JFrame {
         JMenuItem price = new JMenuItem("Price", getIconImage("green check.png"));
         price.addActionListener(this::refreshButtonClicked);
         price.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.ALT_MASK));
-        price.setMnemonic(KeyEvent.VK_P);
         selected.add(price);
 
         JMenuItem view = new JMenuItem("View", getIconImage("green internet.png"));
         view.addActionListener(this::openWebsite);
         view.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, ActionEvent.ALT_MASK));
-        view.setMnemonic(KeyEvent.VK_V);
         selected.add(view);
 
         JMenuItem edit = new JMenuItem("Edit", getIconImage("green edit.png"));
-        edit.addActionListener(this::editClicked);
         edit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.ALT_MASK));
-        edit.setMnemonic(KeyEvent.VK_E);
         selected.add(edit);
 
         JMenuItem remove = new JMenuItem("Remove", getIconImage("green minus.png"));
         remove.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, ActionEvent.ALT_MASK));
-        remove.setMnemonic(KeyEvent.VK_R);
         remove.addActionListener(this::deleteClicked);
         selected.add(remove);
 
@@ -344,55 +320,43 @@ public class Main extends JFrame {
         JToolBar buttons = new JToolBar();
 
         JButton blueCheck = new JButton(getIconImage("blue check.png"));
-        blueCheck.setToolTipText("Update all item prices");
         blueCheck.addActionListener(this::refreshAllClicked);
         buttons.add(blueCheck);
 
         JButton bluePlus = new JButton(getIconImage("blue plus.png"));
-        bluePlus.setToolTipText("Add an item to Price Watcher");
-        bluePlus.addActionListener(this::addClicked);
         buttons.add(bluePlus);
 
-        JButton blueSearch = new JButton(getIconImage("blue search.png"));
-        blueSearch.setToolTipText("Search for item");
-        buttons.add(blueSearch);
+        buttons.add(new JButton(getIconImage("blue search.png")));
 
         JButton blueUp = new JButton(getIconImage("blue up.png"));
-        blueUp.setToolTipText("Select previous item");
         blueUp.addActionListener(this::upClicked);
         buttons.add(blueUp);
 
         JButton blueDown = new JButton(getIconImage("blue down.png"));
-        blueDown.setToolTipText("Select next item");
         blueDown.addActionListener(this::downClicked);
         buttons.add(blueDown);
 
         buttons.addSeparator();
 
         JButton greenCheck = new JButton(getIconImage("green check.png"));
-        greenCheck.setToolTipText("Update selected item price");
         greenCheck.addActionListener(this::refreshButtonClicked);
         buttons.add(greenCheck);
 
         JButton greenInternet = new JButton(getIconImage("green internet.png"));
-        greenInternet.setToolTipText("Open selected item website");
         greenInternet.addActionListener(this::openWebsite);
         buttons.add(greenInternet);
 
         JButton greenEdit = new JButton(getIconImage("green edit.png"));
-        greenEdit.setToolTipText("Update selected item details");
-        greenEdit.addActionListener(this::editClicked);
+        greenEdit.addActionListener(this::addClicked);
         buttons.add(greenEdit);
 
         JButton greenMinus = new JButton(getIconImage("green minus.png"));
-        greenMinus.setToolTipText("Delete selected item");
         greenMinus.addActionListener(this::deleteClicked);
         buttons.add(greenMinus);
 
         buttons.addSeparator();
 
         JButton blueInfo = new JButton(getIconImage("blue info.png"));
-        blueInfo.setToolTipText("About Price Watcher");
         blueInfo.addActionListener(this::aboutClicked);
         buttons.add(blueInfo);
 
