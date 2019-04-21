@@ -67,7 +67,7 @@ public class Main extends JFrame{
         showMessage("Updated item price: $" + item.getRecentPrice());
     }
 
-    /**Play sound from resouces that means it is a good time to buy an item.*/
+    /**Play sound from resources that means it is a good time to buy an item.*/
     private void playSound(){
         try{
             URL url = Main.class.getResource("/sound/chaching.au");
