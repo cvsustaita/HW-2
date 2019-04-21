@@ -6,11 +6,6 @@ import java.text.DecimalFormat;
 import javax.swing.*;
 import javax.sound.sampled.*;
 
-/**
- * A dialog for tracking the price of an item.
- *
- * @author Yoonsik Cheon
- */
 @SuppressWarnings("serial")
 public class Main extends JFrame{
 
@@ -131,12 +126,13 @@ public class Main extends JFrame{
     }
 
     void editClicked(ActionEvent event){
-        if(jItemList.getSelectedIndex() != -1){
+        int index = jItemList.getSelectedIndex();
+        if(index != -1){
             Item tempItem = itemList.get(jItemList.getSelectedIndex());
 
             JTextField itemName = new JTextField(tempItem.getName());
             JTextField itemURL = new JTextField(tempItem.getURL());
-            String tempPrice = String.valueOf(tempItem.getInitialPrice());
+            String tempPrice = String.valueOf(tempItem.getRecentPrice());
             JTextField itemPrice = new JTextField(tempPrice);
             Object[] message = {
                     "Name:", itemName,
@@ -147,17 +143,30 @@ public class Main extends JFrame{
             int option = JOptionPane.showConfirmDialog(this, message, "Add", JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE);
                 if (option == 0) {
                     try {
+                        itemList.get(index).setName(itemName.getText());
+                        itemList.get(index).setURL(itemURL.getText());
+                        itemList.get(index).setRecentPrice(Double.parseDouble(itemPrice.getText()));
 
-                    repaint();
-                    showMessage("Edited correctly");
-                } catch (Exception e) {
-                    showMessage("Please enter information.");
+                        double oldPrice = itemList.get(index).getInitialPrice();
+                        double updatedPrice = itemList.get(index).getRecentPrice();
+                        double increase = updatedPrice - oldPrice;
+                        double percentIncrease = increase / oldPrice * 100;
+
+                        DecimalFormat df = new DecimalFormat("#.00");
+                        String priceFormatted = df.format(updatedPrice);
+                        priceFormatted = df.format(percentIncrease);
+                        percentIncrease = Double.parseDouble(priceFormatted);
+                        itemList.get(index).setPriceChange(percentIncrease);
+                        repaint();
+                        showMessage("Edited correctly");
+                    } catch (Exception e) {
+                        showMessage("Please enter information.");
+                    }
                 }
+            } else {
+                showMessage("Not Selecting an Item");
             }
-        } else {
-            showMessage("Not Selecting an Item");
         }
-    }
 
     private void addItemClicked(ActionEvent event){
         JTextField name = new JTextField();
@@ -170,12 +179,10 @@ public class Main extends JFrame{
         };
 
         int option = JOptionPane.showConfirmDialog(this, message, "Add", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-        //OK
         if (option == 0) {
             try{
                 Item newItem = new Item();
                 newItem.setName(name.getText());
-
                 newItem.setWebsiteImage("missing image.png");
                 newItem.setURL(url.getText());
                 newItem.setInitialPrice(Double.parseDouble(price.getText()));
@@ -183,7 +190,6 @@ public class Main extends JFrame{
                 newItem.setPriceChange(0);
                 newItem.setDateAdded(newItem.getDateAdded());
                 itemList.addElement(newItem);
-
                 showMessage("Item Successfully Added");
             } catch (Exception e) {
                 showMessage("Please enter information.");
