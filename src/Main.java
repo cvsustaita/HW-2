@@ -272,14 +272,14 @@ public class Main extends JFrame{
         menuBar.add(App);
 
         JMenuItem about = new JMenuItem("About", getIconImage("blue info.png"));
-        App.add(about);
-        App.addSeparator();
         about.addActionListener(this::aboutClicked);
+        App.add(about);
+
+        App.addSeparator();
 
         JMenuItem exit = new JMenuItem("Exit", getIconImage("blue power.png"));
-        App.add(exit);
-
         exit.addActionListener(this::exitClicked);
+        App.add(exit);
 
         /**************************************************************/
 
@@ -293,6 +293,7 @@ public class Main extends JFrame{
         Item.add(check);
 
         JMenuItem addItem = new JMenuItem("Add Item", getIconImage("blue plus.png"));
+        addItem.addActionListener(this::addItemClicked);
         addItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.ALT_MASK));
         addItem.setMnemonic(KeyEvent.VK_A);
         Item.add(addItem);
@@ -334,6 +335,7 @@ public class Main extends JFrame{
         selected.add(view);
 
         JMenuItem edit = new JMenuItem("Edit", getIconImage("green edit.png"));
+        edit.addActionListener(this::editClicked);
         edit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.ALT_MASK));
         edit.setMnemonic(KeyEvent.VK_E);
         selected.add(edit);
