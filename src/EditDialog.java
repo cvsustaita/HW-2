@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class EditDialog extends JPanel {
+public class EditDialog extends JDialog {
 
     JLabel nameLabel = new JLabel("Name");
     JTextField nameField = new JTextField();
@@ -9,6 +9,10 @@ public class EditDialog extends JPanel {
     JTextField urlField = new JTextField();
     JLabel priceLabel = new JLabel("Price");
     JTextField priceField = new JTextField();
+
+    String enteredName;
+    String enteredURL;
+    String eneterdPrice;
 
     EditDialog(){
         Dimension dim = new Dimension();
@@ -23,6 +27,40 @@ public class EditDialog extends JPanel {
         add(urlField);
         add(priceLabel);
         add(priceField);
+
+
+
+//        JTextField name = new JTextField();
+//        JTextField url = new JTextField();
+//        JTextField price = new JTextField();
+//        Object[] message = {
+//                "Name:", name,
+//                "URL:", url,
+//                "Price:", price
+//        };
+
+
+
+//        int option = JOptionPane.showConfirmDialog(this, message, "Add", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+//        //OK
+//        if (option == 0) {
+//            try{
+//                Item newItem = new Item();
+//                newItem.setName(name.getText());
+//                newItem.setWebsiteImage("apple.png");
+//                newItem.setURL(url.getText());
+//                newItem.setInitialPrice(Double.parseDouble(price.getText()));
+//                newItem.setRecentPrice(Double.parseDouble(price.getText()));
+//                newItem.setPriceChange(0);
+//                newItem.setDateAdded(newItem.getDateAdded());
+//                itemList.addElement(newItem);
+//
+//                showMessage("Item Successfully Added");
+//            } catch (Exception e) {
+//                showMessage("Please enter information.");
+//            }
+//        }
+//
     }
 
     @Override
