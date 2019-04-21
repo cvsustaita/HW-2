@@ -16,7 +16,7 @@ class ListMouseListener extends MouseAdapter {
                 System.out.println("--------"+index+" "+item.getName());
 
                 JMenuItem checkPrice = new JMenuItem("Check price");
-                checkPrice.addActionListener(Main::aboutClicked);
+                //checkPrice.addActionListener(Main::aboutClicked);
 
                 JMenuItem openWebpage = new JMenuItem("Open webpage");
 

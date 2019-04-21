@@ -212,7 +212,7 @@ public class Main extends JFrame{
 
         jItemList.setCellRenderer(itemRenderer);
 
-        MouseListener mouseListener = new ListMouseListener();
+        //MouseListener mouseListener = new ListMouseListener();
 
         //jItemList.addMouseListener(new ListMouseListener());
 
