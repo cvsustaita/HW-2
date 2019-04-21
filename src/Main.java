@@ -47,7 +47,7 @@ public class Main extends JFrame{
     /** Callback to be invoked when the refresh button is clicked.
      * Find the current price of the watched item and display it
      * along with a percentage price change. */
-    private void refreshButtonClicked(ActionEvent event) {
+    void refreshButtonClicked(ActionEvent event) {
 
         Item item = jItemList.getSelectedValue();
         if (item == null) return;
@@ -87,7 +87,7 @@ public class Main extends JFrame{
     /** Callback to be invoked when the view-page icon is clicked.
      * Launch a (default) web browser by supplying the URL of
      * the item. */
-    private void openWebsite(ActionEvent event) {
+    void openWebsite(ActionEvent event) {
         Item item = jItemList.getSelectedValue();
         if (item == null) return;
 
@@ -118,11 +118,11 @@ public class Main extends JFrame{
         System.exit(0);
     }
 
-    void aboutClicked(ActionEvent event) {
+    private void aboutClicked(ActionEvent event) {
         JOptionPane.showMessageDialog(null, "Erik Macik && Cynthia Sustaita", "About", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    private void deleteClicked(ActionEvent event) {
+    void deleteClicked(ActionEvent event) {
         int selected = JOptionPane.showConfirmDialog(null, "Do you really want to remove this item?", "Remove", JOptionPane.YES_NO_OPTION);
         System.out.println(selected);
 
@@ -130,7 +130,7 @@ public class Main extends JFrame{
             itemList.remove(jItemList.getSelectedIndex());
     }
 
-    private void editClicked(ActionEvent event){
+    void editClicked(ActionEvent event){
         if(jItemList.getSelectedIndex() != -1){
             Item tempItem = itemList.get(jItemList.getSelectedIndex());
 
@@ -238,9 +238,7 @@ public class Main extends JFrame{
 
         jItemList.setCellRenderer(itemRenderer);
 
-        //MouseListener mouseListener = new ListMouseListener();
-
-        //jItemList.addMouseListener(new ListMouseListener());
+        jItemList.addMouseListener(new ListMouseListener(this));
 
         board.add(new JScrollPane(jItemList));
         add(board, BorderLayout.CENTER);
