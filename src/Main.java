@@ -131,7 +131,32 @@ public class Main extends JFrame{
     }
 
     private void editClicked(ActionEvent event){
-        JOptionPane.showMessageDialog(null, new EditDialog());
+        if(jItemList.getSelectedIndex() != -1){
+            Item tempItem = itemList.get(jItemList.getSelectedIndex());
+
+            JTextField itemName = new JTextField(tempItem.getName());
+            JTextField itemURL = new JTextField(tempItem.getURL());
+            String tempPrice = String.valueOf(tempItem.getInitialPrice());
+            JTextField itemPrice = new JTextField(tempPrice);
+            Object[] message = {
+                    "Name:", itemName,
+                    "URL:", itemURL,
+                    "Price:", itemPrice
+            };
+
+            int option = JOptionPane.showConfirmDialog(this, message, "Add", JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE);
+                if (option == 0) {
+                    try {
+
+                    repaint();
+                    showMessage("Edited correctly");
+                } catch (Exception e) {
+                    showMessage("Please enter information.");
+                }
+            }
+        } else {
+            showMessage("Not Selecting an Item");
+        }
     }
 
     private void addItemClicked(ActionEvent event){
@@ -150,6 +175,7 @@ public class Main extends JFrame{
             try{
                 Item newItem = new Item();
                 newItem.setName(name.getText());
+
                 newItem.setWebsiteImage("apple.png");
                 newItem.setURL(url.getText());
                 newItem.setInitialPrice(Double.parseDouble(price.getText()));
