@@ -136,6 +136,30 @@ public class Main extends JFrame {
     }
 
     private void addItemClicked(ActionEvent event){
+        JTextField name = new JTextField();
+        JTextField url = new JTextField();
+        JTextField price = new JTextField();
+        Object[] message = {
+                "Product Name:", name,
+                "Product URL:", url,
+                "Product Price:", price
+        };
+
+        int option = JOptionPane.showConfirmDialog(this, message, "Add", JOptionPane.OK_CANCEL_OPTION, 0);
+        //OK
+        if (option == 0) {
+            try {
+                Item newItem = new Item();
+                newItem.setName(name.getText());
+                newItem.setInitialPrice(Double.parseDouble(price.getText()));
+                newItem.setURL(url.getText());
+                newItem.setDateAdded(newItem.getDateAdded());
+                itemList.addElement(newItem);
+                showMessage("Product Successfully Added");
+            } catch (NumberFormatException e) {
+                showMessage("Please re-enter correct information.");
+            }
+        }
         JOptionPane.showMessageDialog(null, new EditDialog());
     }
 
