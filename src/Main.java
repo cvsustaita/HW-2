@@ -139,15 +139,15 @@ public class Main extends JFrame{
         JTextField url = new JTextField();
         JTextField price = new JTextField();
         Object[] message = {
-                "Product Name:", name,
-                "Product URL:", url,
-                "Product Price:", price
+                "Name:", name,
+                "URL:", url,
+                "Price:", price
         };
 
-        int option = JOptionPane.showConfirmDialog(this, message, "Add", JOptionPane.OK_CANCEL_OPTION, 0);
+        int option = JOptionPane.showConfirmDialog(this, message, "Add", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
         //OK
         if (option == 0) {
-            try {
+            try{
                 Item newItem = new Item();
                 newItem.setName(name.getText());
                 newItem.setWebsiteImage("apple.png");
@@ -158,12 +158,11 @@ public class Main extends JFrame{
                 newItem.setDateAdded(newItem.getDateAdded());
                 itemList.addElement(newItem);
 
-                showMessage("Product Successfully Added");
-            } catch (NumberFormatException e) {
-                showMessage("Please re-enter correct information.");
+                showMessage("Item Successfully Added");
+            } catch (Exception e) {
+                showMessage("Please enter information.");
             }
         }
-        //JOptionPane.showMessageDialog(null, new EditDialog());
     }
 
     private void refreshAllClicked(ActionEvent event){
