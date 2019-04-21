@@ -361,44 +361,55 @@ public class Main extends JFrame {
         JToolBar buttons = new JToolBar();
 
         JButton blueCheck = new JButton(getIconImage("blue check.png"));
+        blueCheck.setToolTipText("Update all prices");
         blueCheck.addActionListener(this::refreshAllClicked);
         buttons.add(blueCheck);
 
         JButton bluePlus = new JButton(getIconImage("blue plus.png"));
+        bluePlus.setToolTipText("Add an item to Price Watcher");
         bluePlus.addActionListener(this::addItemClicked);
         buttons.add(bluePlus);
 
-        buttons.add(new JButton(getIconImage("blue search.png")));
+        JButton blueSearch = new JButton(getIconImage("blue search.png"));
+        blueSearch.setToolTipText("Search for an item");
+        buttons.add(blueSearch);
 
         JButton blueUp = new JButton(getIconImage("blue up.png"));
+        blueUp.setToolTipText("Select Previous item");
         blueUp.addActionListener(this::upClicked);
         buttons.add(blueUp);
 
         JButton blueDown = new JButton(getIconImage("blue down.png"));
+        blueDown.setToolTipText("Select next item");
         blueDown.addActionListener(this::downClicked);
         buttons.add(blueDown);
 
         buttons.addSeparator();
 
         JButton greenCheck = new JButton(getIconImage("green check.png"));
+        greenCheck.setToolTipText("Update selected item price");
         greenCheck.addActionListener(this::refreshButtonClicked);
         buttons.add(greenCheck);
 
         JButton greenInternet = new JButton(getIconImage("green internet.png"));
+        greenInternet.setToolTipText("Open selected item's website");
         greenInternet.addActionListener(this::openWebsite);
         buttons.add(greenInternet);
 
         JButton greenEdit = new JButton(getIconImage("green edit.png"));
+        greenEdit.setToolTipText("Edit selected item details");
         greenEdit.addActionListener(this::editClicked);
         buttons.add(greenEdit);
 
         JButton greenMinus = new JButton(getIconImage("green minus.png"));
+        greenMinus.setToolTipText("Delete selected item");
         greenMinus.addActionListener(this::deleteClicked);
         buttons.add(greenMinus);
 
         buttons.addSeparator();
 
         JButton blueInfo = new JButton(getIconImage("blue info.png"));
+        blueInfo.setToolTipText("About Price Watcher");
         blueInfo.addActionListener(this::aboutClicked);
         buttons.add(blueInfo);
 
