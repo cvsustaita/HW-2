@@ -3,11 +3,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**
+* Responsible for handing mouse events on a JList to display a popup menu.
+*
+ * @author Erik Madik
+ * @author Cynthia Sustaita
+**/
+
 class ListMouseListener extends MouseAdapter {
 
     Main main;
     JPopupMenu popupMenu = new JPopupMenu();
 
+    /**Creates a new mouse listener.
+     * @param main The main execution to be referenced later.*/
     public ListMouseListener(Main main) {
         this.main = main;
 
@@ -35,6 +44,7 @@ class ListMouseListener extends MouseAdapter {
         popupMenu.add(removeItem);
     }
 
+    /**Display popup menu when mouse is double clicked*/
     @Override
     public void mouseClicked(MouseEvent e) {
         super.mouseClicked(e);
@@ -51,6 +61,7 @@ class ListMouseListener extends MouseAdapter {
         }
     }
 
+    /**Action listener to cancel popup*/
     void cancelPopup(ActionEvent event){
         popupMenu.setVisible(false);
     }

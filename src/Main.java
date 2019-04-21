@@ -72,6 +72,7 @@ public class Main extends JFrame{
         showMessage("Updated item price: $" + item.getRecentPrice());
     }
 
+    /**Play sound from resouces that means it is a good time to buy an item.*/
     private void playSound(){
         try{
             URL url = Main.class.getResource("/sound/chaching.au");
@@ -102,6 +103,7 @@ public class Main extends JFrame{
         showMessage("View clicked!");
     }
 
+    /**Select previous item*/
     private void upClicked(ActionEvent event){
         int newSelected = jItemList.getSelectedIndex() -1;
         if (newSelected < 0)
@@ -110,18 +112,22 @@ public class Main extends JFrame{
             jItemList.setSelectedIndex(newSelected);
     }
 
+    /**Select next item*/
     private void downClicked(ActionEvent event){
         jItemList.setSelectedIndex((jItemList.getSelectedIndex()+1) % itemList.getSize());
     }
 
+    /**Close price watcher*/
     private void exitClicked(ActionEvent event){
         System.exit(0);
     }
 
+    /**Display "About Price Watcher" dialog*/
     private void aboutClicked(ActionEvent event) {
         JOptionPane.showMessageDialog(null, "Erik Macik && Cynthia Sustaita", "About", JOptionPane.INFORMATION_MESSAGE);
     }
 
+    /**Delete an item from price watcher*/
     void deleteClicked(ActionEvent event) {
         int selected = JOptionPane.showConfirmDialog(null, "Do you really want to remove this item?", "Remove", JOptionPane.YES_NO_OPTION);
         System.out.println(selected);
@@ -130,6 +136,7 @@ public class Main extends JFrame{
             itemList.remove(jItemList.getSelectedIndex());
     }
 
+    /**Edit item in price watcher*/
     void editClicked(ActionEvent event){
         if(jItemList.getSelectedIndex() != -1){
             Item tempItem = itemList.get(jItemList.getSelectedIndex());
@@ -159,6 +166,7 @@ public class Main extends JFrame{
         }
     }
 
+    /**Add item to price watcher*/
     private void addItemClicked(ActionEvent event){
         JTextField name = new JTextField();
         JTextField url = new JTextField();
@@ -191,6 +199,7 @@ public class Main extends JFrame{
         }
     }
 
+    /**Refresh all items tracked by price watcher*/
     private void refreshAllClicked(ActionEvent event){
         for (int i = 0; i < itemList.getSize(); i++){
             jItemList.setSelectedIndex(i);
@@ -248,7 +257,7 @@ public class Main extends JFrame{
     }
 
 
-    /** Create a control panel consisting of a refresh button. */
+    /** @return Custom control panel */
     private JPanel makeControlPanel() {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEADING));
         JMenuBar menuBar = new JMenuBar();
@@ -383,6 +392,7 @@ public class Main extends JFrame{
         return panel;
     }
 
+    /**@return Custom button panel*/
     private JPanel makeButtonPanel(){
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEADING));
         JToolBar buttons = new JToolBar();
@@ -444,6 +454,7 @@ public class Main extends JFrame{
         return panel;
     }
 
+    /**@return image in resources given by fileName*/
     private ImageIcon getIconImage(String fileName){
         try {
             URL url = new URL(getClass().getResource("/image/"), fileName);
