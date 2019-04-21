@@ -1,11 +1,8 @@
 import javax.swing.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class ListMouseListener extends MouseAdapter {
-
-    JPopupMenu popupMenu = new JPopupMenu();
+class ListMouseListener extends MouseAdapter {
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -14,20 +11,18 @@ public class ListMouseListener extends MouseAdapter {
         if (e.getClickCount() == 2){
             int index = jItemList.locationToIndex(e.getPoint());
             if (index >= 0){
+                JPopupMenu popupMenu = new JPopupMenu();
                 Item item = (Item) jItemList.getModel().getElementAt(index);
                 System.out.println("--------"+index+" "+item.getName());
 
                 JMenuItem checkPrice = new JMenuItem("Check price");
-                checkPrice.addActionListener((this::cancelDialog));
+                checkPrice.addActionListener(Main::aboutClicked);
 
                 JMenuItem openWebpage = new JMenuItem("Open webpage");
-                openWebpage.addActionListener((this::cancelDialog));
 
                 JMenuItem editItem = new JMenuItem("Edit item");
-                editItem.addActionListener((this::cancelDialog));
 
                 JMenuItem removeItem = new JMenuItem("Remove Item");
-                removeItem.addActionListener((this::cancelDialog));
 
                 popupMenu.removeAll();
 
@@ -42,8 +37,7 @@ public class ListMouseListener extends MouseAdapter {
         }
     }
 
-    public void cancelDialog(ActionEvent event){
-        popupMenu.removeAll();
-        popupMenu.setVisible(false);
+    void cancelDialog(){
+
     }
 }

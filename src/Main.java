@@ -118,7 +118,7 @@ public class Main extends JFrame{
         System.exit(0);
     }
 
-    private void aboutClicked(ActionEvent event) {
+    void aboutClicked(ActionEvent event) {
         JOptionPane.showMessageDialog(null, "Erik Macik && Cynthia Sustaita", "About", JOptionPane.INFORMATION_MESSAGE);
     }
 
@@ -212,7 +212,9 @@ public class Main extends JFrame{
 
         jItemList.setCellRenderer(itemRenderer);
 
-        jItemList.addMouseListener(new ListMouseListener());
+        MouseListener mouseListener = new ListMouseListener();
+
+        //jItemList.addMouseListener(new ListMouseListener());
 
         board.add(new JScrollPane(jItemList));
         add(board, BorderLayout.CENTER);
