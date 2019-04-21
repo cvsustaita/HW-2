@@ -151,10 +151,14 @@ public class Main extends JFrame {
             try {
                 Item newItem = new Item();
                 newItem.setName(name.getText());
-                newItem.setInitialPrice(Double.parseDouble(price.getText()));
+                newItem.setWebsiteImage("apple.png");
                 newItem.setURL(url.getText());
+                newItem.setInitialPrice(Double.parseDouble(price.getText()));
+                newItem.setRecentPrice(Double.parseDouble(price.getText()));
+                newItem.setPriceChange(0);
                 newItem.setDateAdded(newItem.getDateAdded());
                 itemList.addElement(newItem);
+
                 showMessage("Product Successfully Added");
             } catch (NumberFormatException e) {
                 showMessage("Please re-enter correct information.");
