@@ -53,7 +53,6 @@ class ListMouseListener extends MouseAdapter {
             int index = jItemList.locationToIndex(e.getPoint());
             if (index >= 0){
                 Item item = (Item) jItemList.getModel().getElementAt(index);
-                System.out.println("--------"+index+" "+item.getName());
 
                 popupMenu.setVisible(true);
                 popupMenu.setLocation(e.getLocationOnScreen());

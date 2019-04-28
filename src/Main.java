@@ -11,7 +11,6 @@ public class Main extends JFrame{
 
     private DefaultListModel<Item> itemList = new DefaultListModel<>();
     private JList<Item> jItemList = new JList<>(itemList);
-    private PriceFinder priceFinder = new PriceFinder();
 
     /** Default dimension of the dialog. */
     private final static Dimension DEFAULT_SIZE = new Dimension(400, 300);
@@ -47,8 +46,17 @@ public class Main extends JFrame{
         Item item = jItemList.getSelectedValue();
         if (item == null) return;
 
+        double updatedPrice = 0;
+
+        if (item.getURL().contains("bestbuy")){
+             updatedPrice = new BestBuyPriceFinder().findPrice(item.getURL());
+        } else if (item.getURL().contains("amazon")) {
+
+        } else {
+            updatedPrice = new PriceFinder().getRandomPrice();
+        }
+
         double oldPrice = item.getInitialPrice();
-        double updatedPrice = priceFinder.getRandomPrice();
         double increase = updatedPrice - oldPrice;
         double percentIncrease = increase / oldPrice * 100;
 
