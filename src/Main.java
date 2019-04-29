@@ -11,6 +11,8 @@ public class Main extends JFrame{
 
     private DefaultListModel<Item> itemList = new DefaultListModel<>();
     private JList<Item> jItemList = new JList<>(itemList);
+    private WebPriceFinder webPriceFinder = new WebPriceFinder();
+    private JProgressBar progressBar = new JProgressBar();
 
     /** Default dimension of the dialog. */
     private final static Dimension DEFAULT_SIZE = new Dimension(400, 300);
@@ -42,18 +44,21 @@ public class Main extends JFrame{
      * Find the current price of the watched item and display it
      * along with a percentage price change. */
     void refreshButtonClicked(ActionEvent event) {
-
         Item item = jItemList.getSelectedValue();
         if (item == null) return;
 
-        double updatedPrice = 0;
+        double updatedPrice;
 
-        if (item.getURL().contains("bestbuy")){
-             updatedPrice = new BestBuyPriceFinder().findPrice(item.getURL());
-        } else if (item.getURL().contains("amazon")) {
-
+        if (item.getURL().contains("bestbuy") || item.getURL().contains("apple")){
+            updatedPrice = webPriceFinder.findPrice(item.getURL(), this);
         } else {
-            updatedPrice = new PriceFinder().getRandomPrice();
+            JOptionPane.showMessageDialog(this, "Store not supported.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (updatedPrice <= 0) {
+            JOptionPane.showMessageDialog(this, item.getName()+" price could not be updated.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
 
         double oldPrice = item.getInitialPrice();
@@ -195,16 +200,20 @@ public class Main extends JFrame{
         };
 
         int option = JOptionPane.showConfirmDialog(this, message, "Add", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-        if (option == 0) {
+        if (option == JOptionPane.OK_OPTION) {
             try{
                 Item newItem = new Item();
                 newItem.setName(name.getText());
-                newItem.setWebsiteImage("missing image.png");
                 newItem.setURL(url.getText());
                 newItem.setInitialPrice(Double.parseDouble(price.getText()));
                 newItem.setRecentPrice(Double.parseDouble(price.getText()));
                 newItem.setPriceChange(0);
                 newItem.setDateAdded(newItem.getDateAdded());
+
+                if (newItem.getURL().contains("bestbuy")) newItem.setWebsiteImage("best buy.png");
+                else if (newItem.getURL().contains("apple")) newItem.setWebsiteImage("apple.png");
+                else newItem.setWebsiteImage("missing image.png");
+
                 itemList.addElement(newItem);
                 showMessage("Item Successfully Added");
             } catch (Exception e) {
@@ -215,10 +224,17 @@ public class Main extends JFrame{
 
     /**Refresh all items tracked by price watcher*/
     private void refreshAllClicked(ActionEvent event){
+        progressBar.setVisible(true);
+        progressBar.setMinimum(0);
+        progressBar.setMaximum(itemList.getSize());
+        progressBar.setValue(0);
         for (int i = 0; i < itemList.getSize(); i++){
+            System.out.println("------"+progressBar.getValue());
             jItemList.setSelectedIndex(i);
             refreshButtonClicked(null);
+            progressBar.setValue(progressBar.getValue()+1);
         }
+        System.out.println("------"+progressBar.getValue());
         jItemList.clearSelection();
         showMessage("All item prices updated");
     }
@@ -247,6 +263,8 @@ public class Main extends JFrame{
         ledMonitor.setPriceChange(0);
         ledMonitor.setDateAdded(ledMonitor.getDateAdded());
 
+        itemList.addElement(ledMonitor);
+        itemList.addElement(ledMonitor);
         itemList.addElement(ledMonitor);
 
         Item airPods = new Item();
@@ -466,7 +484,9 @@ public class Main extends JFrame{
         blueInfo.addActionListener(this::aboutClicked);
         buttons.add(blueInfo);
 
+
         panel.add(buttons);
+        panel.add(progressBar);
         return panel;
     }
 
