@@ -11,7 +11,6 @@ public class Main extends JFrame{
 
     private DefaultListModel<Item> itemList = new DefaultListModel<>();
     private JList<Item> jItemList = new JList<>(itemList);
-    private WebPriceFinder webPriceFinder = new WebPriceFinder();
     private JProgressBar progressBar = new JProgressBar();
 
     /** Default dimension of the dialog. */
@@ -48,9 +47,10 @@ public class Main extends JFrame{
         if (item == null) return;
 
         double updatedPrice;
+        WebPriceFinder webPriceFinder = new WebPriceFinder(item.getURL(), this);
 
-        if (item.getURL().contains("bestbuy") || item.getURL().contains("apple")){
-            updatedPrice = webPriceFinder.findPrice(item.getURL(), this);
+        if (item.getURL().contains("bestbuy.com") || item.getURL().contains("apple.com") || item.getURL().contains("etsy.com")){
+            updatedPrice = webPriceFinder.findPrice();
         } else {
             JOptionPane.showMessageDialog(this, "Store not supported.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
@@ -210,8 +210,9 @@ public class Main extends JFrame{
                 newItem.setPriceChange(0);
                 newItem.setDateAdded(newItem.getDateAdded());
 
-                if (newItem.getURL().contains("bestbuy")) newItem.setWebsiteImage("best buy.png");
-                else if (newItem.getURL().contains("apple")) newItem.setWebsiteImage("apple.png");
+                if (newItem.getURL().contains("bestbuy.com")) newItem.setWebsiteImage("best buy.png");
+                else if (newItem.getURL().contains("apple.com")) newItem.setWebsiteImage("apple.png");
+                else if (newItem.getURL().contains("etsy.com")) newItem.setWebsiteImage("etsy.png");
                 else newItem.setWebsiteImage("missing image.png");
 
                 itemList.addElement(newItem);
@@ -258,28 +259,36 @@ public class Main extends JFrame{
         ledMonitor.setName("LED Monitor");
         ledMonitor.setWebsiteImage("best buy.png");
         ledMonitor.setURL("https://www.bestbuy.com/site/samsung-ue590-series-28-led-4k-uhd-monitor-black/5484022.p?skuId=5484022");
-        ledMonitor.setInitialPrice(370.0);
-        ledMonitor.setRecentPrice(370.0);
+        ledMonitor.setInitialPrice(300.0);
+        ledMonitor.setRecentPrice(300.0);
         ledMonitor.setPriceChange(0);
         ledMonitor.setDateAdded(ledMonitor.getDateAdded());
 
-        itemList.addElement(ledMonitor);
-        itemList.addElement(ledMonitor);
         itemList.addElement(ledMonitor);
 
         Item airPods = new Item();
         airPods.setName("AirPods");
         airPods.setWebsiteImage("apple.png");
         airPods.setURL("https://www.apple.com/shop/product/MRXJ2/airpods-with-wireless-charging-case");
-        airPods.setInitialPrice(199.0);
-        airPods.setRecentPrice(199.0);
+        airPods.setInitialPrice(169.0);
+        airPods.setRecentPrice(169.0);
         airPods.setPriceChange(0);
         airPods.setDateAdded(airPods.getDateAdded());
 
         itemList.addElement(airPods);
 
-        jItemList.setCellRenderer(itemRenderer);
+        Item ring = new Item();
+        ring.setName("Legend of Zelda Ring");
+        ring.setWebsiteImage("etsy.png");
+        ring.setURL("https://www.etsy.com/listing/464162801/legend-of-zelda-triforce-11ct-princess?ref=hp_rv-4&frs=1");
+        ring.setInitialPrice(670.0);
+        ring.setRecentPrice(670.0);
+        ring.setPriceChange(0);
+        ring.setDateAdded(ring.getDateAdded());
 
+        itemList.addElement(ring);
+
+        jItemList.setCellRenderer(itemRenderer);
         jItemList.addMouseListener(new ListMouseListener(this));
 
         board.add(new JScrollPane(jItemList));

@@ -8,11 +8,21 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
 
-class WebPriceFinder extends PriceFinder {
+class WebPriceFinder extends PriceFinder{
+
+    //MIGHT BE ABLE TO EXTEND THREAD OR IMPLEMENT RUNNABLE TO MAKE NEW THREAD
+    //TO MAKE NEW THREAD RUN, new Thread(new MyRunnable()).start();
 
     private Pattern pattern = Pattern.compile("\\$?(\\d+\\.\\d{2})");
+    private String itemUrl;
+    private Main main;
 
-    double findPrice(String itemUrl, Main main) {
+    WebPriceFinder(String itemUrl, Main main){
+        this.itemUrl = itemUrl;
+        this.main = main;
+    }
+
+    double findPrice() {
         HttpURLConnection con = null;
         try{
             URL url = new URL(itemUrl);
@@ -30,8 +40,9 @@ class WebPriceFinder extends PriceFinder {
 
             BufferedReader in = new BufferedReader(reader);
 
-            if (itemUrl.contains("bestbuy")) return bestBuyPattern(in);
-            if (itemUrl.contains("apple")) return applePattern(in);
+            if (itemUrl.contains("bestbuy.com")) return bestBuyPattern(in);
+            if (itemUrl.contains("apple.com")) return applePattern(in);
+            if (itemUrl.contains("etsy.com")) return etsyPattern(in);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -40,6 +51,21 @@ class WebPriceFinder extends PriceFinder {
         }
 
         JOptionPane.showMessageDialog(main, "Store not supported.", "Error", JOptionPane.ERROR_MESSAGE);
+        return 0;
+    }
+
+    private double etsyPattern(BufferedReader in) throws  IOException {
+        String line;
+        while ((line = in.readLine()) != null){
+            if (line.contains("product:price:amount")){
+                Matcher matcher = pattern.matcher(line);
+                matcher.find();
+                String price = matcher.group();
+                return Double.parseDouble(price);
+            }
+            System.out.println(line);
+        }
+
         return 0;
     }
 
