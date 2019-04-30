@@ -63,7 +63,6 @@ class WebPriceFinder extends PriceFinder{
                 String price = matcher.group();
                 return Double.parseDouble(price);
             }
-            System.out.println(line);
         }
 
         return 0;
