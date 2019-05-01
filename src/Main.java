@@ -225,19 +225,21 @@ public class Main extends JFrame{
 
     /**Refresh all items tracked by price watcher*/
     private void refreshAllClicked(ActionEvent event){
-        progressBar.setVisible(true);
-        progressBar.setMinimum(0);
-        progressBar.setMaximum(itemList.getSize());
-        progressBar.setValue(0);
-        for (int i = 0; i < itemList.getSize(); i++){
-            System.out.println("------"+progressBar.getValue());
-            jItemList.setSelectedIndex(i);
-            refreshButtonClicked(null);
-            progressBar.setValue(progressBar.getValue()+1);
-        }
-        System.out.println("------"+progressBar.getValue());
-        jItemList.clearSelection();
-        showMessage("All item prices updated");
+        progressBar.setIndeterminate(false);
+        setEnabled(false);
+        new Thread(() -> {
+            progressBar.setMinimum(0);
+            progressBar.setMaximum(itemList.getSize());
+            progressBar.setValue(0);
+            for (int i = 0; i < itemList.getSize(); i++){
+                jItemList.setSelectedIndex(i);
+                refreshButtonClicked(null);
+                progressBar.setValue(progressBar.getValue()+1);
+            }
+            jItemList.clearSelection();
+            showMessage("All item prices updated");
+            setEnabled(true);
+        }).start();
     }
 
     /** Configure UI. */
