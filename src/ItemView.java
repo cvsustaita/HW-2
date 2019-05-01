@@ -56,7 +56,7 @@ public class ItemView extends JPanel {
         int itemNameX = x;
         int itemNameY = y;
         y += 20;
-        g.drawString("URL: " + item.getURL(), x, y);
+        g.drawString("URL: " + item.getUrl(), x, y);
         y += 20;
         g.drawString("Price:$", x, y);
         int itemPriceY = y;

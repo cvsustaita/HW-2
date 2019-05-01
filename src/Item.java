@@ -1,3 +1,5 @@
+import json.JSONObject;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
@@ -15,12 +17,36 @@ import java.util.*;
 
 public class Item {
     private String name;
-    private String URL;
+    private String url;
     private String dateAdded;
     private double initialPrice;
     private double recentPrice;
     private double priceChange;
     private Image websiteImage;
+
+    public JSONObject toJson(){
+        Map<String, Object> map = new HashMap<>();
+        map.put("name", name);
+        map.put("URL", url);
+        map.put("dateAdded", dateAdded);
+        map.put("initialPrice", initialPrice);
+        map.put("recentPrice", recentPrice);
+        map.put("priceChange", priceChange);
+
+        return new JSONObject(map);
+    }
+
+    public static Item fromJson(JSONObject jsonObject){
+        Item item = new Item();
+        item.setName(jsonObject.getString("name"));
+        item.setUrl(jsonObject.getString("URL"));
+        item.setDateAdded(jsonObject.getString("dateAdded"));
+        item.setInitialPrice(jsonObject.getDouble("initialPrice"));
+        item.setRecentPrice(jsonObject.getDouble("recentPrice"));
+        item.setPriceChange(jsonObject.getDouble("priceChange"));
+
+        return item;
+    }
 
     /**Create a new item with no initial values*/
     public Item(){}
@@ -30,10 +56,10 @@ public class Item {
         this.name = name;
     }
 
-    /**Set item URL.
-     * @param URL Website url*/
-    public void setURL(String URL) {
-        this.URL = URL;
+    /**Set item url.
+     * @param url Website url*/
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     /**Set item date added.
@@ -59,9 +85,9 @@ public class Item {
         return name;
     }
 
-    /**Returns item URL.*/
-    public String getURL() {
-        return URL;
+    /**Returns item url.*/
+    public String getUrl() {
+        return url;
     }
 
     /**Returns item date added.*/

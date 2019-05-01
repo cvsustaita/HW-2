@@ -47,9 +47,9 @@ public class Main extends JFrame{
         if (item == null) return;
 
         double updatedPrice;
-        WebPriceFinder webPriceFinder = new WebPriceFinder(item.getURL(), this);
+        WebPriceFinder webPriceFinder = new WebPriceFinder(item.getUrl(), this);
 
-        if (item.getURL().contains("bestbuy.com") || item.getURL().contains("apple.com") || item.getURL().contains("etsy.com")){
+        if (item.getUrl().contains("bestbuy.com") || item.getUrl().contains("apple.com") || item.getUrl().contains("etsy.com")){
             updatedPrice = webPriceFinder.findPrice();
         } else {
             JOptionPane.showMessageDialog(this, "Store not supported.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -103,7 +103,7 @@ public class Main extends JFrame{
         System.out.println("Web page displaying in your browser");
         try {
             Desktop desktop = Desktop.getDesktop();
-            desktop.browse(new URI(item.getURL()));
+            desktop.browse(new URI(item.getUrl()));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -151,7 +151,7 @@ public class Main extends JFrame{
             Item tempItem = itemList.get(jItemList.getSelectedIndex());
 
             JTextField itemName = new JTextField(tempItem.getName());
-            JTextField itemURL = new JTextField(tempItem.getURL());
+            JTextField itemURL = new JTextField(tempItem.getUrl());
             String tempPrice = String.valueOf(tempItem.getRecentPrice());
             JTextField itemPrice = new JTextField(tempPrice);
             Object[] message = {
@@ -164,7 +164,7 @@ public class Main extends JFrame{
                 if (option == 0) {
                     try {
                         itemList.get(index).setName(itemName.getText());
-                        itemList.get(index).setURL(itemURL.getText());
+                        itemList.get(index).setUrl(itemURL.getText());
                         itemList.get(index).setRecentPrice(Double.parseDouble(itemPrice.getText()));
 
                         double oldPrice = itemList.get(index).getInitialPrice();
@@ -204,15 +204,15 @@ public class Main extends JFrame{
             try{
                 Item newItem = new Item();
                 newItem.setName(name.getText());
-                newItem.setURL(url.getText());
+                newItem.setUrl(url.getText());
                 newItem.setInitialPrice(Double.parseDouble(price.getText()));
                 newItem.setRecentPrice(Double.parseDouble(price.getText()));
                 newItem.setPriceChange(0);
                 newItem.setDateAdded(newItem.getDateAdded());
 
-                if (newItem.getURL().contains("bestbuy.com")) newItem.setWebsiteImage("best buy.png");
-                else if (newItem.getURL().contains("apple.com")) newItem.setWebsiteImage("apple.png");
-                else if (newItem.getURL().contains("etsy.com")) newItem.setWebsiteImage("etsy.png");
+                if (newItem.getUrl().contains("bestbuy.com")) newItem.setWebsiteImage("best buy.png");
+                else if (newItem.getUrl().contains("apple.com")) newItem.setWebsiteImage("apple.png");
+                else if (newItem.getUrl().contains("etsy.com")) newItem.setWebsiteImage("etsy.png");
                 else newItem.setWebsiteImage("missing image.png");
 
                 itemList.addElement(newItem);
@@ -260,7 +260,7 @@ public class Main extends JFrame{
         Item ledMonitor = new Item();
         ledMonitor.setName("LED Monitor");
         ledMonitor.setWebsiteImage("best buy.png");
-        ledMonitor.setURL("https://www.bestbuy.com/site/samsung-ue590-series-28-led-4k-uhd-monitor-black/5484022.p?skuId=5484022");
+        ledMonitor.setUrl("https://www.bestbuy.com/site/samsung-ue590-series-28-led-4k-uhd-monitor-black/5484022.p?skuId=5484022");
         ledMonitor.setInitialPrice(300.0);
         ledMonitor.setRecentPrice(300.0);
         ledMonitor.setPriceChange(0);
@@ -271,7 +271,7 @@ public class Main extends JFrame{
         Item airPods = new Item();
         airPods.setName("AirPods");
         airPods.setWebsiteImage("apple.png");
-        airPods.setURL("https://www.apple.com/shop/product/MRXJ2/airpods-with-wireless-charging-case");
+        airPods.setUrl("https://www.apple.com/shop/product/MRXJ2/airpods-with-wireless-charging-case");
         airPods.setInitialPrice(169.0);
         airPods.setRecentPrice(169.0);
         airPods.setPriceChange(0);
@@ -282,7 +282,7 @@ public class Main extends JFrame{
         Item ring = new Item();
         ring.setName("Legend of Zelda Ring");
         ring.setWebsiteImage("etsy.png");
-        ring.setURL("https://www.etsy.com/listing/464162801/legend-of-zelda-triforce-11ct-princess?ref=hp_rv-4&frs=1");
+        ring.setUrl("https://www.etsy.com/listing/464162801/legend-of-zelda-triforce-11ct-princess?ref=hp_rv-4&frs=1");
         ring.setInitialPrice(670.0);
         ring.setRecentPrice(670.0);
         ring.setPriceChange(0);
