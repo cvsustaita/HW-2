@@ -1,10 +1,14 @@
+import json.*;
+
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
 import java.text.DecimalFormat;
 import javax.swing.*;
 import javax.sound.sampled.*;
+
 
 @SuppressWarnings("serial")
 public class Main extends JFrame{
@@ -12,6 +16,8 @@ public class Main extends JFrame{
     private DefaultListModel<Item> itemList = new DefaultListModel<>();
     private JList<Item> jItemList = new JList<>(itemList);
     private JProgressBar progressBar = new JProgressBar();
+    private ItemManager itemManager = new ItemManager();
+    private JSONArray jsonArray = new JSONArray();
 
     /** Default dimension of the dialog. */
     private final static Dimension DEFAULT_SIZE = new Dimension(400, 300);
@@ -142,6 +148,7 @@ public class Main extends JFrame{
 
         if (selected == JOptionPane.YES_OPTION)
             itemList.remove(jItemList.getSelectedIndex());
+            //storageManager.toStorageJSON(storageManager.toJSON());
     }
 
     /**Edit item in price watcher*/
@@ -161,32 +168,32 @@ public class Main extends JFrame{
             };
 
             int option = JOptionPane.showConfirmDialog(this, message, "Add", JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE);
-                if (option == 0) {
-                    try {
-                        itemList.get(index).setName(itemName.getText());
-                        itemList.get(index).setUrl(itemURL.getText());
-                        itemList.get(index).setRecentPrice(Double.parseDouble(itemPrice.getText()));
+            if (option == 0) {
+                try {
+                    itemList.get(index).setName(itemName.getText());
+                    itemList.get(index).setUrl(itemURL.getText());
+                    itemList.get(index).setRecentPrice(Double.parseDouble(itemPrice.getText()));
 
-                        double oldPrice = itemList.get(index).getInitialPrice();
-                        double updatedPrice = itemList.get(index).getRecentPrice();
-                        double increase = updatedPrice - oldPrice;
-                        double percentIncrease = increase / oldPrice * 100;
+                    double oldPrice = itemList.get(index).getInitialPrice();
+                    double updatedPrice = itemList.get(index).getRecentPrice();
+                    double increase = updatedPrice - oldPrice;
+                    double percentIncrease = increase / oldPrice * 100;
 
-                        DecimalFormat df = new DecimalFormat("#.00");
-                        String priceFormatted = df.format(updatedPrice);
-                        priceFormatted = df.format(percentIncrease);
-                        percentIncrease = Double.parseDouble(priceFormatted);
-                        itemList.get(index).setPriceChange(percentIncrease);
-                        repaint();
-                        showMessage("Edited correctly");
-                    } catch (Exception e) {
-                        showMessage("Please enter information.");
-                    }
+                    DecimalFormat df = new DecimalFormat("#.00");
+                    String priceFormatted = df.format(updatedPrice);
+                    priceFormatted = df.format(percentIncrease);
+                    percentIncrease = Double.parseDouble(priceFormatted);
+                    itemList.get(index).setPriceChange(percentIncrease);
+                    repaint();
+                    showMessage("Edited correctly");
+                } catch (Exception e) {
+                    showMessage("Please enter information.");
                 }
-            } else {
-                showMessage("Not Selecting an Item");
             }
+        } else {
+            showMessage("Not Selecting an Item");
         }
+    }
 
     /**Add item to price watcher*/
     private void addItemClicked(ActionEvent event){
@@ -216,6 +223,17 @@ public class Main extends JFrame{
                 else newItem.setWebsiteImage("missing image.png");
 
                 itemList.addElement(newItem);
+                itemManager.saveToJSON(itemList);
+
+                /* for (int i = 0; i < itemList.size(); i++)
+                    jsonArray.put(itemList.get(i).toJson());
+
+                try {
+                    itemManager.saveToJSON(jsonArray);
+                } catch(Exception e){
+                    e.printStackTrace();
+                }*/
+
                 showMessage("Item Successfully Added");
             } catch (Exception e) {
                 showMessage("Please enter information.");
@@ -256,7 +274,7 @@ public class Main extends JFrame{
                 BorderFactory.createEmptyBorder(10,16,0,16),
                 BorderFactory.createLineBorder(Color.GRAY)));
         board.setLayout(new GridLayout(1,1));
-
+/*
         Item ledMonitor = new Item();
         ledMonitor.setName("LED Monitor");
         ledMonitor.setWebsiteImage("best buy.png");
@@ -289,9 +307,39 @@ public class Main extends JFrame{
         ring.setDateAdded(ring.getDateAdded());
 
         itemList.addElement(ring);
+        */
+
+        //itemManager.saveToJSON(itemList);
+        itemManager.fromJSON(itemList);
 
         jItemList.setCellRenderer(itemRenderer);
         jItemList.addMouseListener(new ListMouseListener(this));
+
+        /*JSONArray jsonArray = new JSONArray();
+
+        for (int i = 0; i < itemList.size(); i++)
+            jsonArray.put(itemList.get(i).toJson());
+
+        try {
+            itemManager.saveToJSON(jsonArray);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } */
+
+        //ADD ITEMLIST TO JSON
+        //JSONArray jsonArray = new JSONArray();
+
+
+//        for (int i = 0; i < itemList.size(); i++) {
+//            System.out.println(itemList.get(i).toJson());
+//            jsonArray.put(itemList.get(i).toJson());
+//        }
+//
+//        try {
+//            itemManager.saveToJSON(jsonArray);
+//        } catch(Exception e){
+//            e.printStackTrace();
+//        }
 
         board.add(new JScrollPane(jItemList));
         add(board, BorderLayout.CENTER);

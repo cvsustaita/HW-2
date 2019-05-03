@@ -89,6 +89,4 @@ public class ItemView extends JPanel {
     private boolean isViewPageClicked(int x, int y) {
         return new Rectangle(20, 20, 30, 20).contains(x,  y);
     }
-
-
 }

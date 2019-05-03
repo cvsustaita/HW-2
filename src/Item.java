@@ -45,6 +45,11 @@ public class Item {
         item.setRecentPrice(jsonObject.getDouble("recentPrice"));
         item.setPriceChange(jsonObject.getDouble("priceChange"));
 
+        if (item.getUrl().contains("bestbuy.com")) item.setWebsiteImage("best buy.png");
+        else if (item.getUrl().contains("apple.com")) item.setWebsiteImage("apple.png");
+        else if (item.getUrl().contains("etsy.com")) item.setWebsiteImage("etsy.png");
+        else item.setWebsiteImage("missing image.png");
+
         return item;
     }
 
