@@ -1,6 +1,5 @@
 import json.JSONArray;
 import json.JSONTokener;
-
 import javax.swing.*;
 import java.io.*;
 import java.nio.file.Files;
@@ -8,9 +7,21 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
+/**
+ * Class responsible of item's data persistence
+ * The items are stored in an external storage (JSON)
+ * so they are available when the application is closed
+ * and launched once again
+ *
+ * @author Erik Macik
+ * @author Cynthis Sustaita
+ * */
+
 public class ItemManager {
     private static final String PATHNAME = "src/stored/storedItems.json";
 
+    /** Saving items in current list into json file -> responsible for holding items
+     * @param itemList */
     public void saveToJSON(DefaultListModel<Item> itemList) {
         try {
             FileWriter fr = new FileWriter(PATHNAME);
@@ -22,14 +33,15 @@ public class ItemManager {
                 jsonArray.put(itemList.get(i).toJson());
             }
             Files.write(Paths.get(PATHNAME), jsonArray.toString().getBytes(), StandardOpenOption.APPEND);
-            System.out.println(jsonArray.toString());
+            //System.out.println(jsonArray.toString());
 
-          //  br.write(jsonArray.toString());
         } catch (IOException e){
             e.printStackTrace();
         }
     }
 
+    /** Retrieve items from json file in order to store into items list
+     * @param itemList */
     public void fromJSON(DefaultListModel<Item> itemList) {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(PATHNAME));
@@ -44,9 +56,5 @@ public class ItemManager {
         } catch (IOException e){
             e.printStackTrace();
         }
-        //FileWriter jsonFile = new FileWriter(new File(PATHNAME));
-        //for(int i = 0; i < jsonArray.length(); i++){
-        //Files.write(Paths.get(PATHNAME), jsonArray.toString(), StandardOpenOption.APPEND);
-        //}
     }
 }

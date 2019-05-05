@@ -22,6 +22,10 @@ class WebPriceFinder extends PriceFinder{
         this.main = main;
     }
 
+    /**
+     *
+     * @return
+     */
     double findPrice() {
         HttpURLConnection con = null;
         try{
@@ -54,6 +58,12 @@ class WebPriceFinder extends PriceFinder{
         return 0;
     }
 
+    /**
+     *
+     * @param in
+     * @return
+     * @throws IOException
+     */
     private double etsyPattern(BufferedReader in) throws  IOException {
         String line;
         while ((line = in.readLine()) != null){
@@ -68,6 +78,12 @@ class WebPriceFinder extends PriceFinder{
         return 0;
     }
 
+    /**
+     *
+     * @param in
+     * @return
+     * @throws IOException
+     */
     private double applePattern(BufferedReader in) throws IOException {
         String line;
         while((line = in.readLine()) != null){
@@ -82,6 +98,12 @@ class WebPriceFinder extends PriceFinder{
         return 0;
     }
 
+    /**
+     *
+     * @param in
+     * @return
+     * @throws IOException
+     */
     private double bestBuyPattern(BufferedReader in) throws IOException {
         String line;
         while ((line = in.readLine()) != null){

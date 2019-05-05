@@ -24,6 +24,10 @@ public class Item {
     private double priceChange;
     private Image websiteImage;
 
+    /**
+     *
+     * @return
+     */
     public JSONObject toJson(){
         Map<String, Object> map = new HashMap<>();
         map.put("name", name);
@@ -36,6 +40,11 @@ public class Item {
         return new JSONObject(map);
     }
 
+    /**
+     *
+     * @param jsonObject
+     * @return
+     */
     public static Item fromJson(JSONObject jsonObject){
         Item item = new Item();
         item.setName(jsonObject.getString("name"));

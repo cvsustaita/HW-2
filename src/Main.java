@@ -148,7 +148,7 @@ public class Main extends JFrame{
 
         if (selected == JOptionPane.YES_OPTION)
             itemList.remove(jItemList.getSelectedIndex());
-            //storageManager.toStorageJSON(storageManager.toJSON());
+            itemManager.saveToJSON(itemList);
     }
 
     /**Edit item in price watcher*/
@@ -184,6 +184,7 @@ public class Main extends JFrame{
                     priceFormatted = df.format(percentIncrease);
                     percentIncrease = Double.parseDouble(priceFormatted);
                     itemList.get(index).setPriceChange(percentIncrease);
+                    itemManager.saveToJSON(itemList);
                     repaint();
                     showMessage("Edited correctly");
                 } catch (Exception e) {
@@ -225,15 +226,6 @@ public class Main extends JFrame{
                 itemList.addElement(newItem);
                 itemManager.saveToJSON(itemList);
 
-                /* for (int i = 0; i < itemList.size(); i++)
-                    jsonArray.put(itemList.get(i).toJson());
-
-                try {
-                    itemManager.saveToJSON(jsonArray);
-                } catch(Exception e){
-                    e.printStackTrace();
-                }*/
-
                 showMessage("Item Successfully Added");
             } catch (Exception e) {
                 showMessage("Please enter information.");
@@ -274,79 +266,16 @@ public class Main extends JFrame{
                 BorderFactory.createEmptyBorder(10,16,0,16),
                 BorderFactory.createLineBorder(Color.GRAY)));
         board.setLayout(new GridLayout(1,1));
-/*
-        Item ledMonitor = new Item();
-        ledMonitor.setName("LED Monitor");
-        ledMonitor.setWebsiteImage("best buy.png");
-        ledMonitor.setUrl("https://www.bestbuy.com/site/samsung-ue590-series-28-led-4k-uhd-monitor-black/5484022.p?skuId=5484022");
-        ledMonitor.setInitialPrice(300.0);
-        ledMonitor.setRecentPrice(300.0);
-        ledMonitor.setPriceChange(0);
-        ledMonitor.setDateAdded(ledMonitor.getDateAdded());
 
-        itemList.addElement(ledMonitor);
-
-        Item airPods = new Item();
-        airPods.setName("AirPods");
-        airPods.setWebsiteImage("apple.png");
-        airPods.setUrl("https://www.apple.com/shop/product/MRXJ2/airpods-with-wireless-charging-case");
-        airPods.setInitialPrice(169.0);
-        airPods.setRecentPrice(169.0);
-        airPods.setPriceChange(0);
-        airPods.setDateAdded(airPods.getDateAdded());
-
-        itemList.addElement(airPods);
-
-        Item ring = new Item();
-        ring.setName("Legend of Zelda Ring");
-        ring.setWebsiteImage("etsy.png");
-        ring.setUrl("https://www.etsy.com/listing/464162801/legend-of-zelda-triforce-11ct-princess?ref=hp_rv-4&frs=1");
-        ring.setInitialPrice(670.0);
-        ring.setRecentPrice(670.0);
-        ring.setPriceChange(0);
-        ring.setDateAdded(ring.getDateAdded());
-
-        itemList.addElement(ring);
-        */
-
-        //itemManager.saveToJSON(itemList);
         itemManager.fromJSON(itemList);
-
         jItemList.setCellRenderer(itemRenderer);
         jItemList.addMouseListener(new ListMouseListener(this));
-
-        /*JSONArray jsonArray = new JSONArray();
-
-        for (int i = 0; i < itemList.size(); i++)
-            jsonArray.put(itemList.get(i).toJson());
-
-        try {
-            itemManager.saveToJSON(jsonArray);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } */
-
-        //ADD ITEMLIST TO JSON
-        //JSONArray jsonArray = new JSONArray();
-
-
-//        for (int i = 0; i < itemList.size(); i++) {
-//            System.out.println(itemList.get(i).toJson());
-//            jsonArray.put(itemList.get(i).toJson());
-//        }
-//
-//        try {
-//            itemManager.saveToJSON(jsonArray);
-//        } catch(Exception e){
-//            e.printStackTrace();
-//        }
 
         board.add(new JScrollPane(jItemList));
         add(board, BorderLayout.CENTER);
         msgBar.setBorder(BorderFactory.createEmptyBorder(10,16,10,0));
         add(msgBar, BorderLayout.SOUTH);
     }
-
 
     /** @return Custom control panel */
     private JPanel makeControlPanel() {
