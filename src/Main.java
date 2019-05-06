@@ -148,7 +148,7 @@ public class Main extends JFrame{
 
         if (selected == JOptionPane.YES_OPTION)
             itemList.remove(jItemList.getSelectedIndex());
-            itemManager.saveToJSON(itemList);
+        itemManager.saveToJSON(itemList);
     }
 
     /**Edit item in price watcher*/
@@ -252,6 +252,29 @@ public class Main extends JFrame{
         }).start();
     }
 
+    protected MouseMotionListener pointerListener(){
+        return new MouseMotionListener() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                System.out.println("X:" + e.getX() + "Y:" + e.getY());
+                if (e.getX() < 40
+                        && e.getX() > 20
+                        && e.getY() < 30 + (jItemList.getSelectedIndex() * 140)
+                        && e.getY() > 18 + (jItemList.getSelectedIndex() * 140)
+                        && jItemList.getSelectedIndex() != -1) {
+                    repaint();
+                } else if (jItemList.getSelectedIndex() > -1) {
+                    itemList.get(jItemList.getSelectedIndex()).setWebsiteImage("green internet.png");
+                    repaint();
+                }
+            }
+        };
+    }
+
     /** Configure UI. */
     private void configureUI() {
         setLayout(new BorderLayout());
@@ -270,7 +293,7 @@ public class Main extends JFrame{
         itemManager.fromJSON(itemList);
         jItemList.setCellRenderer(itemRenderer);
         jItemList.addMouseListener(new ListMouseListener(this));
-		jItemList.addMouseMotionListener(new PointerListener(this));
+        jItemList.addMouseMotionListener(new PointerListener(this));
 
         board.add(new JScrollPane(jItemList));
         add(board, BorderLayout.CENTER);
