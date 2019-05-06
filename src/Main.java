@@ -1,23 +1,18 @@
-import json.*;
-
 import java.awt.*;
 import java.awt.event.*;
-import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
 import java.text.DecimalFormat;
 import javax.swing.*;
 import javax.sound.sampled.*;
 
-
 @SuppressWarnings("serial")
-public class Main extends JFrame{
+public class Main extends JFrame {
 
     private DefaultListModel<Item> itemList = new DefaultListModel<>();
     private JList<Item> jItemList = new JList<>(itemList);
+    private WebPriceFinder webPriceFinder = new WebPriceFinder();
     private JProgressBar progressBar = new JProgressBar();
-    private ItemManager itemManager = new ItemManager();
-    private JSONArray jsonArray = new JSONArray();
 
     /** Default dimension of the dialog. */
     private final static Dimension DEFAULT_SIZE = new Dimension(400, 300);
@@ -53,10 +48,9 @@ public class Main extends JFrame{
         if (item == null) return;
 
         double updatedPrice;
-        WebPriceFinder webPriceFinder = new WebPriceFinder(item.getUrl(), this);
 
-        if (item.getUrl().contains("bestbuy.com") || item.getUrl().contains("apple.com") || item.getUrl().contains("etsy.com")){
-            updatedPrice = webPriceFinder.findPrice();
+        if (item.getURL().contains("bestbuy") || item.getURL().contains("apple")){
+            updatedPrice = webPriceFinder.findPrice(item.getURL(), this);
         } else {
             JOptionPane.showMessageDialog(this, "Store not supported.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
@@ -109,7 +103,7 @@ public class Main extends JFrame{
         System.out.println("Web page displaying in your browser");
         try {
             Desktop desktop = Desktop.getDesktop();
-            desktop.browse(new URI(item.getUrl()));
+            desktop.browse(new URI(item.getURL()));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -148,7 +142,6 @@ public class Main extends JFrame{
 
         if (selected == JOptionPane.YES_OPTION)
             itemList.remove(jItemList.getSelectedIndex());
-            itemManager.saveToJSON(itemList);
     }
 
     /**Edit item in price watcher*/
@@ -158,7 +151,7 @@ public class Main extends JFrame{
             Item tempItem = itemList.get(jItemList.getSelectedIndex());
 
             JTextField itemName = new JTextField(tempItem.getName());
-            JTextField itemURL = new JTextField(tempItem.getUrl());
+            JTextField itemURL = new JTextField(tempItem.getURL());
             String tempPrice = String.valueOf(tempItem.getRecentPrice());
             JTextField itemPrice = new JTextField(tempPrice);
             Object[] message = {
@@ -168,33 +161,32 @@ public class Main extends JFrame{
             };
 
             int option = JOptionPane.showConfirmDialog(this, message, "Add", JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE);
-            if (option == 0) {
-                try {
-                    itemList.get(index).setName(itemName.getText());
-                    itemList.get(index).setUrl(itemURL.getText());
-                    itemList.get(index).setRecentPrice(Double.parseDouble(itemPrice.getText()));
+                if (option == 0) {
+                    try {
+                        itemList.get(index).setName(itemName.getText());
+                        itemList.get(index).setURL(itemURL.getText());
+                        itemList.get(index).setRecentPrice(Double.parseDouble(itemPrice.getText()));
 
-                    double oldPrice = itemList.get(index).getInitialPrice();
-                    double updatedPrice = itemList.get(index).getRecentPrice();
-                    double increase = updatedPrice - oldPrice;
-                    double percentIncrease = increase / oldPrice * 100;
+                        double oldPrice = itemList.get(index).getInitialPrice();
+                        double updatedPrice = itemList.get(index).getRecentPrice();
+                        double increase = updatedPrice - oldPrice;
+                        double percentIncrease = increase / oldPrice * 100;
 
-                    DecimalFormat df = new DecimalFormat("#.00");
-                    String priceFormatted = df.format(updatedPrice);
-                    priceFormatted = df.format(percentIncrease);
-                    percentIncrease = Double.parseDouble(priceFormatted);
-                    itemList.get(index).setPriceChange(percentIncrease);
-                    itemManager.saveToJSON(itemList);
-                    repaint();
-                    showMessage("Edited correctly");
-                } catch (Exception e) {
-                    showMessage("Please enter information.");
+                        DecimalFormat df = new DecimalFormat("#.00");
+                        String priceFormatted = df.format(updatedPrice);
+                        priceFormatted = df.format(percentIncrease);
+                        percentIncrease = Double.parseDouble(priceFormatted);
+                        itemList.get(index).setPriceChange(percentIncrease);
+                        repaint();
+                        showMessage("Edited correctly");
+                    } catch (Exception e) {
+                        showMessage("Please enter information.");
+                    }
                 }
+            } else {
+                showMessage("Not Selecting an Item");
             }
-        } else {
-            showMessage("Not Selecting an Item");
         }
-    }
 
     /**Add item to price watcher*/
     private void addItemClicked(ActionEvent event){
@@ -212,20 +204,17 @@ public class Main extends JFrame{
             try{
                 Item newItem = new Item();
                 newItem.setName(name.getText());
-                newItem.setUrl(url.getText());
+                newItem.setURL(url.getText());
                 newItem.setInitialPrice(Double.parseDouble(price.getText()));
                 newItem.setRecentPrice(Double.parseDouble(price.getText()));
                 newItem.setPriceChange(0);
                 newItem.setDateAdded(newItem.getDateAdded());
 
-                if (newItem.getUrl().contains("bestbuy.com")) newItem.setWebsiteImage("best buy.png");
-                else if (newItem.getUrl().contains("apple.com")) newItem.setWebsiteImage("apple.png");
-                else if (newItem.getUrl().contains("etsy.com")) newItem.setWebsiteImage("etsy.png");
+                if (newItem.getURL().contains("bestbuy")) newItem.setWebsiteImage("best buy.png");
+                else if (newItem.getURL().contains("apple")) newItem.setWebsiteImage("apple.png");
                 else newItem.setWebsiteImage("missing image.png");
 
                 itemList.addElement(newItem);
-                itemManager.saveToJSON(itemList);
-
                 showMessage("Item Successfully Added");
             } catch (Exception e) {
                 showMessage("Please enter information.");
@@ -235,21 +224,19 @@ public class Main extends JFrame{
 
     /**Refresh all items tracked by price watcher*/
     private void refreshAllClicked(ActionEvent event){
-        progressBar.setIndeterminate(false);
-        setEnabled(false);
-        new Thread(() -> {
-            progressBar.setMinimum(0);
-            progressBar.setMaximum(itemList.getSize());
-            progressBar.setValue(0);
-            for (int i = 0; i < itemList.getSize(); i++){
-                jItemList.setSelectedIndex(i);
-                refreshButtonClicked(null);
-                progressBar.setValue(progressBar.getValue()+1);
-            }
-            jItemList.clearSelection();
-            showMessage("All item prices updated");
-            setEnabled(true);
-        }).start();
+        progressBar.setVisible(true);
+        progressBar.setMinimum(0);
+        progressBar.setMaximum(itemList.getSize());
+        progressBar.setValue(0);
+        for (int i = 0; i < itemList.getSize(); i++){
+            System.out.println("------"+progressBar.getValue());
+            jItemList.setSelectedIndex(i);
+            refreshButtonClicked(null);
+            progressBar.setValue(progressBar.getValue()+1);
+        }
+        System.out.println("------"+progressBar.getValue());
+        jItemList.clearSelection();
+        showMessage("All item prices updated");
     }
 
     /** Configure UI. */
@@ -267,15 +254,41 @@ public class Main extends JFrame{
                 BorderFactory.createLineBorder(Color.GRAY)));
         board.setLayout(new GridLayout(1,1));
 
-        itemManager.fromJSON(itemList);
+        Item ledMonitor = new Item();
+        ledMonitor.setName("LED Monitor");
+        ledMonitor.setWebsiteImage("best buy.png");
+        ledMonitor.setURL("https://www.bestbuy.com/site/samsung-ue590-series-28-led-4k-uhd-monitor-black/5484022.p?skuId=5484022");
+        ledMonitor.setInitialPrice(370.0);
+        ledMonitor.setRecentPrice(370.0);
+        ledMonitor.setPriceChange(0);
+        ledMonitor.setDateAdded(ledMonitor.getDateAdded());
+
+        itemList.addElement(ledMonitor);
+        itemList.addElement(ledMonitor);
+        itemList.addElement(ledMonitor);
+
+        Item airPods = new Item();
+        airPods.setName("AirPods");
+        airPods.setWebsiteImage("apple.png");
+        airPods.setURL("https://www.apple.com/shop/product/MRXJ2/airpods-with-wireless-charging-case");
+        airPods.setInitialPrice(199.0);
+        airPods.setRecentPrice(199.0);
+        airPods.setPriceChange(0);
+        airPods.setDateAdded(airPods.getDateAdded());
+
+        itemList.addElement(airPods);
+
         jItemList.setCellRenderer(itemRenderer);
+
         jItemList.addMouseListener(new ListMouseListener(this));
+        jItemList.addMouseMotionListener(new PointerListener(this));
 
         board.add(new JScrollPane(jItemList));
         add(board, BorderLayout.CENTER);
         msgBar.setBorder(BorderFactory.createEmptyBorder(10,16,10,0));
         add(msgBar, BorderLayout.SOUTH);
     }
+
 
     /** @return Custom control panel */
     private JPanel makeControlPanel() {
@@ -422,6 +435,9 @@ public class Main extends JFrame{
         JButton blueCheck = new JButton(getIconImage("blue check.png"));
         blueCheck.setToolTipText("Update all prices");
         blueCheck.addActionListener(this::refreshAllClicked);
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////
         buttons.add(blueCheck);
 
         JButton bluePlus = new JButton(getIconImage("blue plus.png"));
